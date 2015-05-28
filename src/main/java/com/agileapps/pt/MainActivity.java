@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -37,6 +38,7 @@ import com.agileapps.pt.pojos.FormTemplate;
 import com.agileapps.pt.pojos.FormTemplatePart;
 import com.agileapps.pt.pojos.InputType;
 import com.agileapps.pt.pojos.QuestionAnswer;
+import com.agileapps.pt.util.PhysicalTherapyUtils;
 
 public class MainActivity extends FragmentActivity {
 
@@ -48,6 +50,7 @@ public class MainActivity extends FragmentActivity {
 	public static final String HOME_WIDGET_VALUE = "homeWidgetValue";
 	public static final String HOME_WIDGET_TYPE_INTEGER = "integer";
 	public static final String HOME_WIDGET_TYPE_TEXT = "text";
+	private static final String INITIALIZATION_ERROR ="initError";
 	private static WidgetData widgetData;
 	private static int answerWidgetId=-1;
 	private static InputType answerWidgetDataType=InputType.TEXT;
@@ -63,11 +66,13 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		try
+		{
 		setContentView(R.layout.activity_main);
 
 		try {
-			this.formTemplate = getFormTemplate();
-			// initializeFragmentMap(formTemplate);
+			this.formTemplate = PhysicalTherapyUtils.parseFormTemplate(getClass().getResourceAsStream(
+				"/assets/DefaultFormTemplate.xml"));
 		} catch (Throwable ex) {
 			Toast toast = Toast.makeText(getApplicationContext(),
 					"Cannot load template file because " + ex.getMessage(),
@@ -84,6 +89,14 @@ public class MainActivity extends FragmentActivity {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+		}catch(Exception ex){
+			String errorStr="Cannot initialize physical therapy because " + ex.getMessage();
+			Log.e(INITIALIZATION_ERROR,errorStr);
+			Toast toast = Toast.makeText(getApplicationContext(),
+			errorStr,
+			Toast.LENGTH_LONG);
+	toast.show();
+		}
 	}
 
 
@@ -303,20 +316,7 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
-	private FormTemplate getFormTemplate() throws Exception {
-		Serializer serial = new Persister();
-		InputStream is = getClass().getResourceAsStream(
-				"/assets/DefaultFormTemplate.xml");
-		StringBuilder sb = new StringBuilder();
-		byte buffer[] = new byte[1000];
-		while ((is.read(buffer)) >= 0) {
-			sb.append(new String(buffer));
-		}
-		FormTemplate formTemplate = serial.read(FormTemplate.class,
-				new StringBufferInputStream(sb.toString()));
-		return formTemplate;
-	}
-	
+
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
