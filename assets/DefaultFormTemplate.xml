@@ -82,139 +82,1141 @@
 		</formTemplatePart>
 		<formTemplatePart>
 			<id>2</id>
-			<title>Range of Motion</title>
+			<title>Posture Exam/Front view</title>
 			<questionAnswerList>
 				<questionAnswer>
 					<id>1</id>
-					<inputType>INTEGER</inputType>
-					<question>Neck</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Pes Planus</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
 				</questionAnswer>
 				<questionAnswer>
 					<id>2</id>
-					<inputType>INTEGER</inputType>
-					<question>Shoulder</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Toes in</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>3</id>
-					<inputType>INTEGER</inputType>
-					<question>Hip</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Toes out</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>4</id>
-					<inputType>INTEGER</inputType>
-					<question>Ankle/Foot</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Bunion</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>5</id>
-					<inputType>INTEGER</inputType>
-					<question>Hamstring</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Tibial malleous medial</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>6</id>
-					<inputType>INTEGER</inputType>
-					<question>Hip Flexors</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Tibial malleous lateral</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>7</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Bowed tibia</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>8</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Patella medial</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>9</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Patella lateral</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>10</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Patella alta</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>11</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Genu valgus</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>12</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Genu varus</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>13</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Smaller VMO</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>14</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Femoral angle medial</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>15</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Femoral angle lateral</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>16</id>
+					<inputType>CHECKBOX</inputType>
+					<question>ASIS low</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>17</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Iliac crest low</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>18</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Umbilicus lateral</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>19</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Nipple low</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>20</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Chest smaller</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>21</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Acromion lower</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>22</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Clavicle angle low</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>23</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Swelling AC joint</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>24</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Swelling SC joint</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>25</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Head tilt</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>26</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Cervical rotation restricted</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>27</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Eye low</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>28</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Nose deviation</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>29</id>
+					<inputType>RADIO</inputType>
+					<question>1/4 one leg squat test R</question>
+					<choiceList><choice>P</choice><choice>F</choice></choiceList>
+					
+				</questionAnswer>
+				<questionAnswer>
+					<id>30</id>
+					<inputType>RADIO</inputType>
+					<question>1/4 one leg squat test L</question>
+					<choiceList><choice>P</choice><choice>F</choice></choiceList>
+					
 				</questionAnswer>
 			</questionAnswerList>
 		</formTemplatePart>
 		<formTemplatePart>
 			<id>3</id>
-			<title>Muscle Strength</title>
+			<title>Posture Exam/Back view COG on chart midline</title>
 			<questionAnswerList>
 				<questionAnswer>
 					<id>1</id>
-					<inputType>INTEGER</inputType>
-					<question>Deep Neck Flexors</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Ankle varus</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>2</id>
-					<inputType>INTEGER</inputType>
-					<question>Shoulder Rotation</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Ankle valgus</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>3</id>
-					<inputType>INTEGER</inputType>
-					<question>Middle Trapezium</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Achilles medial</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>4</id>
-					<inputType>INTEGER</inputType>
-					<question>Lower Trapezium</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Achilles lateral</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>5</id>
-					<inputType>INTEGER</inputType>
-					<question>Serratus Anterior</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Smaller calf muscles</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>6</id>
-					<inputType>INTEGER</inputType>
-					<question>Abdominals</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Popliteal crease lower</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>7</id>
-					<inputType>INTEGER</inputType>
-					<question>Gluteus Maximus</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Genu valgus</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>8</id>
-					<inputType>INTEGER</inputType>
-					<question>Gluteus Medius</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Genu varus</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>9</id>
-					<inputType>INTEGER</inputType>
-					<question>Quadriceps/VMO</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Gluteal crease/fold lower</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>10</id>
-					<inputType>INTEGER</inputType>
-					<question>Hamstrings</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>PSIS low</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>11</id>
-					<inputType>INTEGER</inputType>
-					<question>Calfs</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Iliac crest low</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
-					<id>2</id>
-					<inputType>INTEGER</inputType>
-					<question>Hip Flexors</question>
-					<answer></answer>
+					<id>12</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Abdoinal waist line indented</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>13</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Scoliosis convexity</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>14</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Low acromion</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>15</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Scapula depressed</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>16</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Scapula elevated</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>17</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Scapula inferior angle lift off</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>18</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Scapula medial border lift off</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>19</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Scapula internally rotated</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>20</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Scapula externally rotated</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>21</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Scapula downward rotated</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>22</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Scapula upward rotated</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>23</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Atrophy supraspinaus fossa</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>24</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Atrophy infraspinaus fossa</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>25</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Cervical spine rotated</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>26</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Head tilted</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>27</id>
+					<inputType>CHECKBOX</inputType>
+					<question>AROM shoulder abduction</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 			</questionAnswerList>
 		</formTemplatePart>
 		<formTemplatePart>
 			<id>4</id>
-			<title>Conclusion</title>
+			<title>Posture Exam/Side view left</title>
 			<questionAnswerList>
 				<questionAnswer>
 					<id>1</id>
-					<inputType>TEXT</inputType>
-					<question>Problem Areas</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>LOG front of lateral malleous</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
 				</questionAnswer>
 				<questionAnswer>
 					<id>2</id>
-					<inputType>TEXT</inputType>
-					<question>Recommendations/Exercises</question>
-					<answer></answer>
+					<inputType>CHECKBOX</inputType>
+					<question>Ankle dorsi flexion</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>3</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Ankle plantar flexion</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>4</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Flexed knee</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>5</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Hyper extended knee</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>6</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Hip trochanter anterior</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>7</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Hip trochanter posterior</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>8</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Lumbar vertebrae anterior</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>9</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Lumbar vertebrae posterior</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>10</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Abdominal ptosis</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>11</id>
+					<inputType>CHECKBOX</inputType>
+					<question>kyphosis</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>12</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Torso rotation right</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>13</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Torso rotation left</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>14</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Acromion anterior</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>15</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Acromion posterior</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>16</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Cervical lordosis</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>17</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Forward head</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>18</id>
+					<inputType>CHECKBOX</inputType>
+					<question>AROM shoulder flexion</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+			</questionAnswerList>
+		</formTemplatePart>
+		<formTemplatePart>
+			<id>5</id>
+			<title>Posture Exam/Side view right</title>
+			<questionAnswerList>
+				<questionAnswer>
+					<id>1</id>
+					<inputType>CHECKBOX</inputType>
+					<question>LOG front of lateral malleous</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>2</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Ankle dorsi flexion</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>3</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Ankle plantar flexion</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>4</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Flexed knee</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>5</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Hyper extended knee</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>6</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Hip trochanter anterior</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>7</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Hip trochanter posterior</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>8</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Lumbar vertebrae anterior</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>9</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Lumbar vertebrae posterior</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>10</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Abdominal ptosis</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>11</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Kyphosis</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>12</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Torso rotation right</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>13</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Torso rotation left</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>14</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Acromion anterior</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>15</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Acromion posterior</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>16</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Cervical lordosis</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>17</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Forward head</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>18</id>
+					<inputType>CHECKBOX</inputType>
+					<question>AROM shoulder flexion</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>19</id>
+					<inputType>CHECKBOX</inputType>
+					<question>AROM lateral trunk flexion</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>20</id>
+					<inputType>CHECKBOX</inputType>
+					<question>AROM forward trunk flexion</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>21</id>
+					<inputType>CHECKBOX</inputType>
+					<question>AROM trunk rotation</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>22</id>
+					<inputType>RADIO</inputType>
+					<question>Single leg 1/4 squat test</question>
+					<choiceList><choice>P</choice><choice>F</choice></choiceList>
+					
+				</questionAnswer>
+			</questionAnswerList>
+		</formTemplatePart>
+		<formTemplatePart>
+			<id>6</id>
+			<title>Posture Exam/Stand Trendelenberg test</title>
+			<questionAnswerList>
+				<questionAnswer>
+					<id>1</id>
+					<inputType>RADIO</inputType>
+					<question>L leg stance, R thigh/knee hip high</question>
+					<choiceList><choice>P</choice><choice>F</choice></choiceList>
+					
+				</questionAnswer>
+				<questionAnswer>
+					<id>2</id>
+					<inputType>RADIO</inputType>
+					<question>R leg stance, L thigh/knee hip high</question>
+					<choiceList><choice>P</choice><choice>F</choice></choiceList>
+					
+				</questionAnswer>
+			</questionAnswerList>
+		</formTemplatePart>
+		<formTemplatePart>
+			<id>7</id>
+			<title>Posture Exam/BESS balance and core tests</title>
+			<questionAnswerList>
+				<questionAnswer>
+					<id>1</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Stable base eyes open 20 sec</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>2</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Unstable base eyes open 20 sec</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>3</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Stable base eyes closed 20 sec</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>4</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Unstable base eyes closed 20 sec</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>5</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Hruska side lying hip abd 0/5</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>6</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Bunkie posterior power line sec</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>7</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Bunkie posterior stablizing line sec</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>8</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Bunkie anterior power line sec</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>9</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Bunkie lateral power line sec</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>10</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Bunkie medial stabilizing line sec</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>11</id>
+					<inputType>CHECKBOX</inputType>
+					<question>Bunkie lateral power line sec</question>
+					<choiceList>
+						<choice>R</choice>
+						<choice>L</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>12</id>
+					<inputType>CHECKBOX</inputType>
+					<question>FMS pointer opposite side (0/3)</question>
+					<choiceList>
+						<choice>R/L</choice>
+						<choice>L/R</choice>
+					</choiceList>
+
+				</questionAnswer>
+				<questionAnswer>
+					<id>13</id>
+					<inputType>CHECKBOX</inputType>
+					<question>FMS pointer same side (0/3)</question>
+					<choiceList>
+						<choice>R/R</choice>
+						<choice>L/L</choice>
+					</choiceList>
+
 				</questionAnswer>
 			</questionAnswerList>
 		</formTemplatePart>

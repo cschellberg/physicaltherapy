@@ -14,7 +14,9 @@ public enum InputType {
     EMAIL,
     INTEGER,
     FLOAT,
-    PHONE;
+    PHONE,
+    RADIO,
+    CHECKBOX;
 
     public String value() {
         return name();

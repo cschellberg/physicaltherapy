@@ -8,5 +8,7 @@
     <string name="title_section1">Physical Therapy Form 2</string>
     <string name="title_section2">Physical Therapy Form 3</string>
     <string name="title_section3">Physical Therapy Form 4</string>
+    <string name="print_form">Print Form</string>
+    <string name="exit_app">Exit App</string>
 
 </resources>

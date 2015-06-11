@@ -4,16 +4,64 @@ import static org.junit.Assert.*;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
+
+import android.test.AndroidTestRunner;
+import android.test.suitebuilder.annotation.SmallTest;
 
 import com.agileapps.pt.pojos.FormTemplate;
 import com.agileapps.pt.pojos.FormTemplatePart;
 import com.agileapps.pt.pojos.QuestionAnswer;
 
 public class PhysicalTherapyUtilsTest {
+
+	@Test
+	public void answerReplacerTest() {
+		List<String> valueList = new ArrayList<String>();
+		valueList.add("one");
+		valueList.add("two");
+		valueList.add("three");
+		String answer = PhysicalTherapyUtils.answerReplacer(valueList, null,
+				"one", true);
+		assertEquals(answer, "one");
+		answer = PhysicalTherapyUtils.answerReplacer(valueList, "two", null,
+				true);
+		assertEquals(answer, "two");
+		answer = PhysicalTherapyUtils.answerReplacer(valueList, null,
+				"one", false);
+		assertNull(answer);
+		answer = PhysicalTherapyUtils.answerReplacer(valueList, "two",
+				"one", true);
+		assertEquals(answer, "one two");
+		answer = PhysicalTherapyUtils.answerReplacer(valueList, "two",
+				"three", true);
+		assertEquals(answer, "two three");
+		answer = PhysicalTherapyUtils.answerReplacer(valueList, "two",
+				"two", true);
+		assertEquals(answer, "two");
+		answer = PhysicalTherapyUtils.answerReplacer(valueList, "two",
+				"five", true);
+		assertEquals(answer, "two five");
+		answer = PhysicalTherapyUtils.answerReplacer(valueList, "five",
+				"two", true);
+		assertEquals(answer, "two five");
+
+		answer = PhysicalTherapyUtils.answerReplacer(null, "five",
+				"two", true);
+		assertEquals(answer, "two");
+		
+		answer = PhysicalTherapyUtils.answerReplacer(null, "five",
+				"two", false);
+		assertEquals(answer, "five");
+
+
+
+	}
 
 	@Test
 	public void parseFormTemplateTest() {
@@ -68,12 +116,14 @@ public class PhysicalTherapyUtilsTest {
 			}
 			if (questionAnswer.getInputType() == null) {
 				throw new Exception("Question Answer with id "
-						+ questionAnswer.getId()+" "+questionAnswer.getQuestion()
+						+ questionAnswer.getId() + " "
+						+ questionAnswer.getQuestion()
 						+ " does not have an input type!");
 			}
 			if (idSet.contains(questionAnswer.getId())) {
 				throw new Exception("Question Answer with id "
-						+ questionAnswer.getId()+" "+questionAnswer.getQuestion()
+						+ questionAnswer.getId() + " "
+						+ questionAnswer.getQuestion()
 						+ " has an id that is used by another question");
 			}
 			idSet.add(questionAnswer.getId());
@@ -81,14 +131,19 @@ public class PhysicalTherapyUtilsTest {
 		}
 	}
 
-	 private static void print(FormTemplate formTemplate){
-	        System.out.println("FormTemplate "+formTemplate.getId());
-	        for ( FormTemplatePart formTemplatePart:formTemplate.getFormTemplatePartList()){
-	            System.out.println("\tFormTemplatePart "+formTemplatePart.getId()+" "+formTemplatePart.getTitle());
-	            for ( QuestionAnswer questionAnswer:formTemplatePart.getQuestionAnswerList()){
-	                System.out.println("\t\tQuestionAnswer "+questionAnswer.getId()+" "+questionAnswer.getInputType()+" "+
-	                        questionAnswer.getQuestion());
-	            }
-	        }
-	    }
+	private static void print(FormTemplate formTemplate) {
+		System.out.println("FormTemplate " + formTemplate.getId());
+		for (FormTemplatePart formTemplatePart : formTemplate
+				.getFormTemplatePartList()) {
+			System.out.println("\tFormTemplatePart " + formTemplatePart.getId()
+					+ " " + formTemplatePart.getTitle());
+			for (QuestionAnswer questionAnswer : formTemplatePart
+					.getQuestionAnswerList()) {
+				System.out.println("\t\tQuestionAnswer "
+						+ questionAnswer.getId() + " "
+						+ questionAnswer.getInputType() + " "
+						+ questionAnswer.getQuestion());
+			}
+		}
+	}
 }

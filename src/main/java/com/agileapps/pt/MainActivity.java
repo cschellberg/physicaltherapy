@@ -1,18 +1,18 @@
 package com.agileapps.pt;
 
-import java.io.InputStream;
-import java.io.StringBufferInputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
-
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -22,13 +22,19 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -38,11 +44,12 @@ import com.agileapps.pt.pojos.FormTemplate;
 import com.agileapps.pt.pojos.FormTemplatePart;
 import com.agileapps.pt.pojos.InputType;
 import com.agileapps.pt.pojos.QuestionAnswer;
+import com.agileapps.pt.util.PDFWriter;
 import com.agileapps.pt.util.PhysicalTherapyUtils;
 
 public class MainActivity extends FragmentActivity {
 
-	private static int idCounter=90000;
+	private static int idCounter = 90000;
 	private static final int REQ_CODE_SPEECH_INPUT = 1;
 	public static final String ARG_SECTION_NUMBER = "section_number";
 	public static final String HOME_WIDGET = "homeWidget";
@@ -50,11 +57,9 @@ public class MainActivity extends FragmentActivity {
 	public static final String HOME_WIDGET_VALUE = "homeWidgetValue";
 	public static final String HOME_WIDGET_TYPE_INTEGER = "integer";
 	public static final String HOME_WIDGET_TYPE_TEXT = "text";
-	private static final String INITIALIZATION_ERROR ="initError";
-	private static WidgetData widgetData;
-	private static int answerWidgetId=-1;
-	private static InputType answerWidgetDataType=InputType.TEXT;
-	private FormTemplate formTemplate;
+	private static final String INITIALIZATION_ERROR = "initError";
+	private static int answerWidgetId = -1;
+	private static InputType answerWidgetDataType = InputType.TEXT;
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -63,42 +68,51 @@ public class MainActivity extends FragmentActivity {
 	 */
 	ViewPager mViewPager;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		try
-		{
-		setContentView(R.layout.activity_main);
-
+	private FormTemplate getFormTemplate() {
+		FormTemplate formTemplate = null;
 		try {
-			this.formTemplate = PhysicalTherapyUtils.parseFormTemplate(getClass().getResourceAsStream(
-				"/assets/DefaultFormTemplate.xml"));
+			formTemplate = FormTemplateManager.getFormTemplate();
+			if (formTemplate == null) {
+				Toast toast = Toast.makeText(getApplicationContext(),
+						"Cannot load form template", Toast.LENGTH_LONG);
+				toast.show();
+			}
+			return formTemplate;
 		} catch (Throwable ex) {
 			Toast toast = Toast.makeText(getApplicationContext(),
 					"Cannot load template file because " + ex.getMessage(),
 					Toast.LENGTH_LONG);
 			toast.show();
-		}
-
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the app.
-		FragmentManager fragmentManager = this.getSupportFragmentManager();
-		mSectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager,
-				formTemplate);
-
-		// Set up the ViewPager with the sections adapter.
-		mViewPager = (ViewPager) findViewById(R.id.pager);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
-		}catch(Exception ex){
-			String errorStr="Cannot initialize physical therapy because " + ex.getMessage();
-			Log.e(INITIALIZATION_ERROR,errorStr);
-			Toast toast = Toast.makeText(getApplicationContext(),
-			errorStr,
-			Toast.LENGTH_LONG);
-	toast.show();
+			Log.e(INITIALIZATION_ERROR, "Cannot load template because " + ex,
+					ex);
+			return null;
 		}
 	}
 
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		try {
+			setContentView(R.layout.activity_main);
+			FormTemplate formTemplate = getFormTemplate();
+			if (formTemplate == null) {
+				return;
+			}
+			FragmentManager fragmentManager = this.getSupportFragmentManager();
+			mSectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager);
+
+			// Set up the ViewPager with the sections adapter.
+			mViewPager = (ViewPager) findViewById(R.id.pager);
+			mViewPager.setAdapter(mSectionsPagerAdapter);
+		} catch (Exception ex) {
+			String errorStr = "Cannot initialize physical therapy because "
+					+ ex.getMessage();
+			Log.e(INITIALIZATION_ERROR, errorStr);
+			Toast toast = Toast.makeText(getApplicationContext(), errorStr,
+					Toast.LENGTH_LONG);
+			toast.show();
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,13 +121,45 @@ public class MainActivity extends FragmentActivity {
 		return true;
 	}
 
-	public class SectionsPagerAdapter extends FragmentPagerAdapter {
-		FormTemplate formTemplate;
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		FormTemplate formTemplate = getFormTemplate();
+		if (formTemplate == null) {
+			return false;
+		}
+		// Handle item selection
+		try {
+			switch (item.getItemId()) {
+			case R.id.print_template:
+				try {
+					PrintDocumentAdapter printDocumentAdapter = PDFWriter
+							.getPrinterAdapter(this, formTemplate);
+					PrintManager printManager = (PrintManager) this
+							.getSystemService(Context.PRINT_SERVICE);
+					printManager.print(("pt-" + new java.util.Date()),
+							printDocumentAdapter, null);
+				} catch (Throwable ex) {
+					Toast.makeText(this, "Unable to print form because " + ex,
+							Toast.LENGTH_LONG).show();
+				}
+				break;
+			case R.id.exit_app:
+				finish();
+				break;
+			}
+		} catch (Throwable ex) {
+			Toast toast = Toast.makeText(this.getApplicationContext(),
+					"Cannot print file because " + ex, Toast.LENGTH_LONG);
+			toast.show();
 
-		public SectionsPagerAdapter(FragmentManager fm,
-				FormTemplate formTemplate) {
+		}
+		return true;
+	}
+
+	public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
-			this.formTemplate = formTemplate;
 		}
 
 		@Override
@@ -122,28 +168,28 @@ public class MainActivity extends FragmentActivity {
 			switch (position) {
 			case 0:
 				Part0 part0 = new Part0();
-				part0.setTemplate(position, formTemplate);
+				part0.setTemplate(position);
 				fragment = part0;
 				break;
 			case 1:
 				Part1 part1 = new Part1();
-				part1.setTemplate(position, formTemplate);
+				part1.setTemplate(position);
 				fragment = part1;
 				break;
 			case 2:
 				Part2 part2 = new Part2();
-				part2.setTemplate(position, formTemplate);
+				part2.setTemplate(position);
 				fragment = part2;
 				break;
 			case 3:
 				Part3 part3 = new Part3();
-				part3.setTemplate(position, formTemplate);
+				part3.setTemplate(position);
 				fragment = part3;
 				break;
 
 			default:
 				part0 = new Part0();
-				part0.setTemplate(position, formTemplate);
+				part0.setTemplate(position);
 				fragment = part0;
 			}
 			Bundle args = new Bundle();
@@ -154,7 +200,7 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			return formTemplate.getFormTemplatePartList().size();
+			return getFormTemplate().getFormTemplatePartList().size();
 		}
 
 		@Override
@@ -181,9 +227,9 @@ public class MainActivity extends FragmentActivity {
 		protected int layoutId;
 		protected int tableLayoutId;
 
-		public void setTemplate(int position, FormTemplate formTemplate) {
+		public void setTemplate(int position) {
 			this.position = position;
-			this.formTemplatePart = formTemplate.getFormTemplatePartList().get(
+			this.formTemplatePart = getFormTemplate().getFormTemplatePartList().get(
 					position);
 		}
 
@@ -191,94 +237,192 @@ public class MainActivity extends FragmentActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(layoutId, container, false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
 			TableLayout tableLayout = (TableLayout) rootView
 					.findViewById(tableLayoutId);
 			for (final QuestionAnswer questionAnswer : formTemplatePart
 					.getQuestionAnswerList()) {
-				TableRow tableRow = new TableRow(this.getActivity());
-				TableRow.LayoutParams lp =new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-				tableRow.setLayoutParams(lp);
-				tableLayout.addView(tableRow);
-				TextView questionView = new TextView(this.getActivity());
-				questionView.setTextSize(25f);
-				EditText answerText = new EditText(this.getActivity());
-				answerText.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
-				answerText.setWidth(500);
-				answerText.setId(idCounter++);
-				Button speakButton=new Button(this.getActivity());
-				speakButton.setText("Speak");
-				speakButton.setOnClickListener(new SpeechButtonClickListener (this.getActivity(),questionAnswer.getInputType())) ;
-				if ( questionAnswer.getInputType() == InputType.INTEGER){
-					answerText.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
-					answerText.setWidth(120);
-				}else if  ( questionAnswer.getInputType() == InputType.EMAIL){
-					answerText.setInputType(android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-				}else if  ( questionAnswer.getInputType() == InputType.PHONE){
-					answerText.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
-				}
-				questionView.setText(questionAnswer.getQuestion());
-				tableRow.addView(questionView);
-				tableRow.addView(answerText);
-				tableRow.addView(speakButton);
-				if (questionAnswer.getInputType() == InputType.INTEGER) {
-					Button graphButton = new Button(this.getActivity());
-					graphButton.setText("Graph");
-					tableRow.addView(graphButton);
-				}
-				if (MainActivity.widgetData != null) {
-					TextView textView = (TextView) rootView
-							.findViewById(MainActivity.widgetData.id);
-					textView.setText(MainActivity.widgetData.value);
+				try {
+					TableRow tableRow = new TableRow(this.getActivity());
+					TableRow.LayoutParams lp = new TableRow.LayoutParams(
+							LayoutParams.MATCH_PARENT,
+							LayoutParams.MATCH_PARENT,
+							LayoutParams.MATCH_PARENT);
+					tableRow.setLayoutParams(lp);
+					tableLayout.addView(tableRow);
+					TextView questionView = new TextView(this.getActivity());
+					questionView.setText(questionAnswer.getQuestion());
+					questionView.setTextSize(25f);
+					tableRow.addView(questionView);
+					if (questionAnswer.getInputType() != InputType.CHECKBOX
+							&& questionAnswer.getInputType() != InputType.RADIO) {
+						addTextBox(tableRow, questionAnswer);
+					} else if (questionAnswer.getInputType() == InputType.CHECKBOX) {
+						addCheckBox(tableRow, questionAnswer);
+					} else {
+						addRadio(tableRow, questionAnswer);
+					}
+				} catch (Exception ex) {
+					Log.e(INITIALIZATION_ERROR,
+							"Unable to initialize fragment because " + ex, ex);
 				}
 			}
 			return rootView;
 		}
-		
-		private  class SpeechButtonClickListener implements OnClickListener{
-	        
-			private InputType inputType=InputType.TEXT;
-			private Activity activity;
-			
-			private SpeechButtonClickListener(Activity activity,InputType inputType){
-				this.inputType=inputType;
-				this.activity=activity;
+
+		private void addCheckBox(TableRow tableRow,
+				QuestionAnswer questionAnswer) {
+			for (String value : questionAnswer.getChoiceList()) {
+				CheckBox checkBox = new CheckBox(this.getActivity());
+				checkBox.setText(value);
+				tableRow.addView(checkBox);
+				int widgetId = getUniqueWidgetId();
+				checkBox.setId(widgetId);
+				checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					public void onCheckedChanged(CompoundButton compoundButton,
+							boolean arg1) {
+						CheckBox checkBox = (CheckBox) compoundButton;
+						String text = (new StringBuilder()).append(checkBox.getText()).toString();
+						FormTemplate formTemplate = getFormTemplate();
+						QuestionAnswer questionAnswer = formTemplate
+								.getQuestionAnswer(checkBox.getId());
+						if (checkBox.isChecked()) {
+								String answer= PhysicalTherapyUtils.answerReplacer(questionAnswer.getChoiceList(),questionAnswer.getAnswer(),text,true);
+							questionAnswer.setAnswer(answer.trim());
+						}else{
+							String answer= PhysicalTherapyUtils.answerReplacer(questionAnswer.getChoiceList(),questionAnswer.getAnswer(),text,false);
+							questionAnswer.setAnswer(answer.trim());
+						}
+					}
+
+				});
+				questionAnswer.addWidgetId(widgetId);
 			}
-			
+		}
+
+		private FormTemplate getFormTemplate() {
+			FormTemplate formTemplate = null;
+			try {
+				formTemplate = FormTemplateManager.getFormTemplate();
+			} catch (Exception ex) {
+				Log.e(INITIALIZATION_ERROR,
+						"Could not get form template because " + ex);
+			}
+			return formTemplate;
+		}
+
+		private void addRadio(TableRow tableRow, QuestionAnswer questionAnswer) {
+			RadioGroup radioGroup = new RadioGroup(this.getActivity());
+			radioGroup.setOrientation(LinearLayout.HORIZONTAL);
+			for (String value : questionAnswer.getChoiceList()) {
+				RadioButton radioButton = new RadioButton(this.getActivity());
+				radioButton.setId(getUniqueWidgetId());
+				radioButton.setText(value);
+				radioGroup.addView(radioButton);
+			}
+			radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+				public void onCheckedChanged(RadioGroup radioGoup, int radioId) {
+					//radioGroup.getContext().
+				}
+				
+			});
+			int widgetId = getUniqueWidgetId();
+			radioGroup.setId(widgetId);
+			questionAnswer.addWidgetId(widgetId);
+			tableRow.addView(radioGroup);
+		}
+
+		private int getUniqueWidgetId() {
+			AppWidgetProviderInfo appWidgetInfo = null;
+			int counter = 0;
+			while (appWidgetInfo == null && counter < 10000) {
+				counter++;
+				appWidgetInfo = AppWidgetManager
+						.getInstance(this.getActivity()).getAppWidgetInfo(
+								idCounter);
+				if (appWidgetInfo == null) {
+					int retId = idCounter;
+					idCounter++;
+					return retId;
+				}
+			}
+			throw new RuntimeException(
+					"Cannot find uniqueId to assign to widget");
+		}
+
+		private void addTextBox(TableRow tableRow, QuestionAnswer questionAnswer) {
+			EditText answerText = new EditText(this.getActivity());
+			answerText.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
+			answerText.setWidth(500);
+			int widgetId = getUniqueWidgetId();
+			answerText.setId(widgetId);
+			questionAnswer.addWidgetId(widgetId);
+			Button speakButton = new Button(this.getActivity());
+			speakButton.setText("Speak");
+			speakButton.setOnClickListener(new SpeechButtonClickListener(this
+					.getActivity(), questionAnswer.getInputType()));
+			if (questionAnswer.getInputType() == InputType.INTEGER) {
+				answerText
+						.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+				answerText.setWidth(120);
+			} else if (questionAnswer.getInputType() == InputType.EMAIL) {
+				answerText
+						.setInputType(android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+			} else if (questionAnswer.getInputType() == InputType.PHONE) {
+				answerText
+						.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
+			}
+			tableRow.addView(answerText);
+			questionAnswer.addWidgetId(answerText.getId());
+			tableRow.addView(speakButton);
+
+		}
+
+		private class SpeechButtonClickListener implements OnClickListener {
+
+			private InputType inputType = InputType.TEXT;
+			private Activity activity;
+
+			private SpeechButtonClickListener(Activity activity,
+					InputType inputType) {
+				this.inputType = inputType;
+				this.activity = activity;
+			}
+
 			public void onClick(View v) {
 				this.promptSpeechInput(v);
-				
+
 			}
-			
+
 			private void promptSpeechInput(View view) {
-				 MainActivity.answerWidgetDataType=inputType;
-				ViewGroup viewGroup=(ViewGroup)view.getParent();
-				EditText editText=(EditText)viewGroup.getChildAt(1);
-				answerWidgetId=editText.getId();
-				Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+				MainActivity.answerWidgetDataType = inputType;
+				ViewGroup viewGroup = (ViewGroup) view.getParent();
+				EditText editText = (EditText) viewGroup.getChildAt(1);
+				answerWidgetId = editText.getId();
+				Intent intent = new Intent(
+						RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 				intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
 						RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-				intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+				intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,
+						Locale.getDefault());
 				intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak");
 				try {
-					activity.startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+					activity.startActivityForResult(intent,
+							REQ_CODE_SPEECH_INPUT);
 				} catch (ActivityNotFoundException a) {
-					Toast.makeText(view.getContext(), "Speech Not Supported", Toast.LENGTH_SHORT)
-							.show();
+					Toast.makeText(view.getContext(), "Speech Not Supported",
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
-		
-		
-		
+
 	}
 
 	public static class Part0 extends GenericFragment {
 		public Part0() {
 			super();
 			layoutId = R.layout.part_0;
-			tableLayoutId=R.id.tableZeroLayout;
+			tableLayoutId = R.id.tableZeroLayout;
 		}
 	}
 
@@ -286,7 +430,7 @@ public class MainActivity extends FragmentActivity {
 		public Part1() {
 			super();
 			layoutId = R.layout.part_1;
-			tableLayoutId=R.id.tableOneLayout;
+			tableLayoutId = R.id.tableOneLayout;
 		}
 	}
 
@@ -294,7 +438,7 @@ public class MainActivity extends FragmentActivity {
 		public Part2() {
 			super();
 			layoutId = R.layout.part_2;
-			tableLayoutId=R.id.tableTwoLayout;
+			tableLayoutId = R.id.tableTwoLayout;
 		}
 	}
 
@@ -302,21 +446,9 @@ public class MainActivity extends FragmentActivity {
 		public Part3() {
 			super();
 			layoutId = R.layout.part_3;
-			tableLayoutId=R.id.tableThreeLayout;
+			tableLayoutId = R.id.tableThreeLayout;
 		}
 	}
-
-	static class WidgetData {
-		int id;
-		String value;
-
-		WidgetData(int id, String value) {
-			this.id = id;
-			this.value = value;
-		}
-	}
-
-
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -349,5 +481,5 @@ public class MainActivity extends FragmentActivity {
 
 		}
 	}
-	
+
 }

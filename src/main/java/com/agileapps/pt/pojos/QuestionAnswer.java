@@ -7,7 +7,12 @@
 
 package com.agileapps.pt.pojos;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 
 
 public class QuestionAnswer {
@@ -20,6 +25,10 @@ public class QuestionAnswer {
     private String question;
 	@Element(required=false)
     private String answer;
+	@ElementList(required=false)
+	 private List<String>choiceList;
+	
+	private Set<Integer> widgetIdSet=new HashSet<Integer>();
 	
 	public int getId() {
 		return id;
@@ -45,13 +54,33 @@ public class QuestionAnswer {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
+	
+	public List<String> getChoiceList() {
+		return choiceList;
+	}
+	public void setChoiceList(List<String> choiceList) {
+		this.choiceList = choiceList;
+	}
+	
+	
+    public Integer[] getWidgetIds() {
+    	Integer returnArrays[]=new Integer[widgetIdSet.size()];
+    	returnArrays= widgetIdSet.toArray( returnArrays);
+    	return returnArrays;
+	}
+    
+	public void addWidgetId(int widgetId) {
+		widgetIdSet.add(widgetId);
+	}
+	
 	@Override
 	public String toString() {
 		return "QuestionAnswer [id=" + id + ", inputType=" + inputType
-				+ ", question=" + question + ", answer=" + answer + "]";
+				+ ", question=" + question + ", answer=" + answer
+				+ ", choiceList=" + choiceList + "]";
 	}
-
-    public void clear()
+    
+	public void clear()
     {
     	answer=null;
     }
