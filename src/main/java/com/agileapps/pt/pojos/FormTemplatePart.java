@@ -39,6 +39,8 @@ public class FormTemplatePart {
 	public void setQuestionAnswerList(List<QuestionAnswer> questionAnswerList) {
 		this.questionAnswerList = questionAnswerList;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "FormTemplatePart [id=" + id + ", title=" + title

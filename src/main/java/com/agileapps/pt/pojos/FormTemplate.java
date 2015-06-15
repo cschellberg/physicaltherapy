@@ -5,13 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Namespace;
 import org.simpleframework.xml.Root;
 
+import com.agileapps.pt.MainActivity;
+
+import android.util.Log;
+
 @Root
 public class FormTemplate {
+
+	
+	public static final String TITLE_DELIMITER = "%%";
+	
+	public static final String LINE_DELIMITER = "||";
+
+	public static final String QUESTION_DELIMITER = "&&";
 
 	private Map<Integer, QuestionAnswer> widgetIdMap;
 	
@@ -53,7 +65,13 @@ public class FormTemplate {
 		if ( this.widgetIdMap == null ){
 			initializeWidgetIdMap();
 		}
-		return widgetIdMap.get(widgetId);
+		QuestionAnswer questionAnswer=widgetIdMap.get(widgetId);
+		if (questionAnswer == null  ){
+			Log.i(MainActivity.PT_APP_INFO,"Can find question answer for widget "+widgetId+" re-initializing map");
+			initializeWidgetIdMap();//re-initialize the map again to see if you can find it.
+			 questionAnswer=widgetIdMap.get(widgetId);
+		}
+		return questionAnswer;
 	}
 
 	private void initializeWidgetIdMap() {
@@ -65,6 +83,23 @@ public class FormTemplate {
 				}
 			}
 		}
+	}
+
+	public String getPrintableString() {
+		StringBuilder sb=new StringBuilder();
+		for ( FormTemplatePart part:this.formTemplatePartList){
+			StringBuilder subSb=new StringBuilder();
+			for (QuestionAnswer questionAnswer:part.getQuestionAnswerList()){
+				if ( StringUtils.isNotBlank(questionAnswer.getAnswer())){
+					subSb.append(questionAnswer.getQuestion().trim()).append(QUESTION_DELIMITER).append(questionAnswer.getAnswer().trim()).append(LINE_DELIMITER);
+				}
+			}
+			String questionAnswers=subSb.toString();
+			if ( StringUtils.isNotEmpty(questionAnswers)){
+				sb.append(part.getTitle()).append(TITLE_DELIMITER).append(LINE_DELIMITER).append(questionAnswers);
+			}
+		}
+		return sb.toString();
 	}
 
 }

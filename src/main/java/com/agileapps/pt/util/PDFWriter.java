@@ -12,7 +12,7 @@ import java.util.Date;
 
 
 
-
+import org.apache.commons.lang3.StringUtils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,30 +29,38 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.PrintManager;
 import android.print.pdf.PrintedPdfDocument;
+import android.util.Log;
 import android.graphics.pdf.PdfDocument.Page;
 import android.graphics.pdf.PdfDocument.PageInfo;
 import android.graphics.pdf.PdfDocument.PageInfo.Builder;
 
+import com.agileapps.pt.MainActivity;
 import com.agileapps.pt.pojos.FormTemplate;
-
 
 public class PDFWriter {
 
-
 	public static PrintDocumentAdapter getPrinterAdapter(Activity activity,
 			FormTemplate formTemplate) {
-		return new PTPrintDocumentAdapter(activity) ;
+		return new PTPrintDocumentAdapter(activity, formTemplate);
 	}
 
 	private static class PTPrintDocumentAdapter extends PrintDocumentAdapter {
+		private static final float TITLE_TEXT_SIZE = 18;
+		private static final float QUESTION_TEXT_SIZE = 14;
+		private static final int SPLIT_QUESTION = 65;
+		int startingVerticalPosition = 60;
+		int startingLeftMargin = 54;
 		private Activity activity;
 		private int pageHeight;
 		private int pageWidth;
+		private FormTemplate formTemplate;
 		public PrintedPdfDocument ptPdfDocument;
 		public int totalpages = 1;
 
-		private PTPrintDocumentAdapter(Activity activity) {
+		private PTPrintDocumentAdapter(Activity activity,
+				FormTemplate formTemplate) {
 			this.activity = activity;
+			this.formTemplate = formTemplate;
 		}
 
 		@Override
@@ -120,22 +128,69 @@ public class PDFWriter {
 
 		private void drawPage(Page page, int pageNumber) {
 			Canvas canvas = page.getCanvas();
-		    pageNumber++; // Make sure page numbers start at 1
-		    
-		    int titleBaseLine = 72;
-		    int leftMargin = 54;
+			pageNumber++; // Make sure page numbers start at 1
+			int longestQuestion = 10;
+			XY xy = new XY(startingLeftMargin, startingVerticalPosition);
+			Paint paint = new Paint();
+			paint.setColor(Color.BLACK);
+			String printableForm = formTemplate.getPrintableString();
+			String lines[] = StringUtils.splitByWholeSeparator(printableForm,
+					FormTemplate.LINE_DELIMITER);
+			for (String line : lines) {
+				if (!line.contains(FormTemplate.TITLE_DELIMITER)) {
+                    int indexOf=line.indexOf(FormTemplate.QUESTION_DELIMITER)+1;
+                    if ( indexOf > longestQuestion){
+                    	longestQuestion=indexOf;
+                    }
+				}
+			}
+			if ( longestQuestion > SPLIT_QUESTION){
+				longestQuestion=SPLIT_QUESTION;
+			}
+			boolean firstTitle=true;
+			for (String line : lines) {
+				if (line.contains(FormTemplate.TITLE_DELIMITER)) {
+					if ( ! firstTitle){
+						xy=new XY(xy.x,xy.y+10);
+					}
+					xy = printTitle(canvas, paint, xy, StringUtils.chomp(line,
+							FormTemplate.TITLE_DELIMITER));
+					firstTitle=false;
+				} else if (line.contains(FormTemplate.QUESTION_DELIMITER)) {
+					String questionAnswer[] = StringUtils
+							.splitByWholeSeparator(line,
+									FormTemplate.QUESTION_DELIMITER);
+					if (questionAnswer.length > 1) {
+						xy = printQuestion(canvas, paint, xy, questionAnswer[0],longestQuestion);
+						xy = printAnswer(canvas, paint, xy, questionAnswer[1]);
+					} else {
+						xy = printQuestion(canvas, paint, xy, questionAnswer[0],longestQuestion);
+					}
+				}
+				Log.i(MainActivity.PRINTER_INFO,"line "+line+" xy info "+xy);
+			}
+		}
 
-		    Paint paint = new Paint();
-		    paint.setColor(Color.BLACK);
-		    paint.setTextSize(40);
-		    canvas.drawText(
-                     "Test Print Document Page " + pageNumber,
-                                                   leftMargin,
-                                                   titleBaseLine, 
-                                                   paint);
+		private XY printTitle(Canvas canvas, Paint paint, XY xy, String title) {
+			title = title.trim();
+			paint.setTextSize(TITLE_TEXT_SIZE);
+			canvas.drawText(title, xy.x, xy.y, paint);
+			return new XY(xy.x, xy.y + 35);
+		}
 
-		    paint.setTextSize(14);
-		    canvas.drawText("This is some test content to verify that custom document printing works", leftMargin, titleBaseLine + 35, paint);
+		private XY printQuestion(Canvas canvas, Paint paint, XY xy,
+				String question, int longestQuestion) {
+			paint.setTextSize(QUESTION_TEXT_SIZE);
+			question = question.trim();
+			canvas.drawText(question, xy.x, xy.y, paint);
+			return new XY(xy.x + 10 + (longestQuestion * 6), xy.y);
+		}
+
+		private XY printAnswer(Canvas canvas, Paint paint, XY xy, String answer) {
+			answer = answer.trim();
+			paint.setTextSize(QUESTION_TEXT_SIZE);
+			canvas.drawText(answer, xy.x, xy.y, paint);
+			return new XY(startingLeftMargin, xy.y + 20);
 		}
 
 		private boolean pageInRange(PageRange[] pageRanges, int page) {
@@ -147,6 +202,23 @@ public class PDFWriter {
 			return false;
 		}
 
+	}
+
+	private static class XY {
+		private final int x;
+		private final int y;
+
+		private XY(int x, int y) {
+			this.y = y;
+			this.x = x;
+		}
+
+		@Override
+		public String toString() {
+			return "XY [x=" + x + ", y=" + y + "]";
+		}
+		
+		
 	}
 
 }

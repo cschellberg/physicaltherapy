@@ -19,6 +19,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -57,7 +59,8 @@ public class MainActivity extends FragmentActivity {
 	public static final String HOME_WIDGET_VALUE = "homeWidgetValue";
 	public static final String HOME_WIDGET_TYPE_INTEGER = "integer";
 	public static final String HOME_WIDGET_TYPE_TEXT = "text";
-	private static final String INITIALIZATION_ERROR = "initError";
+	public static final String PT_APP_INFO = "ptAppInfo";
+	public static final String PRINTER_INFO = "printerInfo";
 	private static int answerWidgetId = -1;
 	private static InputType answerWidgetDataType = InputType.TEXT;
 
@@ -83,7 +86,7 @@ public class MainActivity extends FragmentActivity {
 					"Cannot load template file because " + ex.getMessage(),
 					Toast.LENGTH_LONG);
 			toast.show();
-			Log.e(INITIALIZATION_ERROR, "Cannot load template because " + ex,
+			Log.e(PT_APP_INFO, "Cannot load template because " + ex,
 					ex);
 			return null;
 		}
@@ -107,7 +110,7 @@ public class MainActivity extends FragmentActivity {
 		} catch (Exception ex) {
 			String errorStr = "Cannot initialize physical therapy because "
 					+ ex.getMessage();
-			Log.e(INITIALIZATION_ERROR, errorStr);
+			Log.e(PT_APP_INFO, errorStr);
 			Toast toast = Toast.makeText(getApplicationContext(), errorStr,
 					Toast.LENGTH_LONG);
 			toast.show();
@@ -229,13 +232,23 @@ public class MainActivity extends FragmentActivity {
 
 		public void setTemplate(int position) {
 			this.position = position;
-			this.formTemplatePart = getFormTemplate().getFormTemplatePartList().get(
-					position);
 		}
+
+		
+		
+		@Override
+		public void onDestroy() {
+			super.onDestroy();
+			bbb
+		}
+
+
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			this.formTemplatePart = getFormTemplate().getFormTemplatePartList()
+					.get(position);
 			View rootView = inflater.inflate(layoutId, container, false);
 			TableLayout tableLayout = (TableLayout) rootView
 					.findViewById(tableLayoutId);
@@ -262,7 +275,7 @@ public class MainActivity extends FragmentActivity {
 						addRadio(tableRow, questionAnswer);
 					}
 				} catch (Exception ex) {
-					Log.e(INITIALIZATION_ERROR,
+					Log.e(PT_APP_INFO,
 							"Unable to initialize fragment because " + ex, ex);
 				}
 			}
@@ -282,15 +295,24 @@ public class MainActivity extends FragmentActivity {
 					public void onCheckedChanged(CompoundButton compoundButton,
 							boolean arg1) {
 						CheckBox checkBox = (CheckBox) compoundButton;
-						String text = (new StringBuilder()).append(checkBox.getText()).toString();
+						String text = (new StringBuilder()).append(
+								checkBox.getText()).toString();
 						FormTemplate formTemplate = getFormTemplate();
 						QuestionAnswer questionAnswer = formTemplate
 								.getQuestionAnswer(checkBox.getId());
 						if (checkBox.isChecked()) {
-								String answer= PhysicalTherapyUtils.answerReplacer(questionAnswer.getChoiceList(),questionAnswer.getAnswer(),text,true);
+							String answer = PhysicalTherapyUtils
+									.answerReplacer(
+											questionAnswer.getChoiceList(),
+											questionAnswer.getAnswer(), text,
+											true);
 							questionAnswer.setAnswer(answer.trim());
-						}else{
-							String answer= PhysicalTherapyUtils.answerReplacer(questionAnswer.getChoiceList(),questionAnswer.getAnswer(),text,false);
+						} else {
+							String answer = PhysicalTherapyUtils
+									.answerReplacer(
+											questionAnswer.getChoiceList(),
+											questionAnswer.getAnswer(), text,
+											false);
 							questionAnswer.setAnswer(answer.trim());
 						}
 					}
@@ -305,14 +327,14 @@ public class MainActivity extends FragmentActivity {
 			try {
 				formTemplate = FormTemplateManager.getFormTemplate();
 			} catch (Exception ex) {
-				Log.e(INITIALIZATION_ERROR,
+				Log.e(PT_APP_INFO,
 						"Could not get form template because " + ex);
 			}
 			return formTemplate;
 		}
 
 		private void addRadio(TableRow tableRow, QuestionAnswer questionAnswer) {
-			RadioGroup radioGroup = new RadioGroup(this.getActivity());
+			final RadioGroup radioGroup = new RadioGroup(this.getActivity());
 			radioGroup.setOrientation(LinearLayout.HORIZONTAL);
 			for (String value : questionAnswer.getChoiceList()) {
 				RadioButton radioButton = new RadioButton(this.getActivity());
@@ -320,12 +342,20 @@ public class MainActivity extends FragmentActivity {
 				radioButton.setText(value);
 				radioGroup.addView(radioButton);
 			}
-			radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-				public void onCheckedChanged(RadioGroup radioGoup, int radioId) {
-					//radioGroup.getContext().
-				}
-				
-			});
+			radioGroup
+					.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+						public void onCheckedChanged(RadioGroup radioGoup,
+								int radioId) {
+							FormTemplate formTemplate = getFormTemplate();
+							QuestionAnswer questionAnswer = formTemplate
+									.getQuestionAnswer(radioGoup.getId());
+							RadioButton radioButton = (RadioButton) radioGroup
+									.findViewById(radioId);
+							questionAnswer.setAnswer(String.valueOf(radioButton
+									.getText()));
+						}
+
+					});
 			int widgetId = getUniqueWidgetId();
 			radioGroup.setId(widgetId);
 			questionAnswer.addWidgetId(widgetId);
@@ -351,7 +381,7 @@ public class MainActivity extends FragmentActivity {
 		}
 
 		private void addTextBox(TableRow tableRow, QuestionAnswer questionAnswer) {
-			EditText answerText = new EditText(this.getActivity());
+			final EditText answerText = new EditText(this.getActivity());
 			answerText.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
 			answerText.setWidth(500);
 			int widgetId = getUniqueWidgetId();
@@ -372,6 +402,26 @@ public class MainActivity extends FragmentActivity {
 				answerText
 						.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
 			}
+			answerText.addTextChangedListener(new TextWatcher() {
+				public void afterTextChanged(Editable editable) {
+					FormTemplate formTemplate = getFormTemplate();
+					QuestionAnswer questionAnswer = formTemplate
+							.getQuestionAnswer(answerText.getId());
+					String answer = editable.toString();
+					questionAnswer.setAnswer(answer);
+				}
+
+				public void beforeTextChanged(CharSequence editable, int start,
+						int count, int after) {
+					// TODO Auto-generated method stub
+
+				}
+
+				public void onTextChanged(CharSequence editable, int start,
+						int count, int after) {
+					// TODO Auto-generated method stub
+				}
+			});
 			tableRow.addView(answerText);
 			questionAnswer.addWidgetId(answerText.getId());
 			tableRow.addView(speakButton);
