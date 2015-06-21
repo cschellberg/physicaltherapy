@@ -3,6 +3,8 @@ package com.agileapps.pt;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.util.Log;
+
 import com.agileapps.pt.pojos.FormTemplate;
 import com.agileapps.pt.util.PhysicalTherapyUtils;
 
@@ -26,6 +28,9 @@ public class FormTemplateManager {
 			}else{
 				formTemplateMap.put(templateResource, formTemplate);
 			}
+			Log.i(MainActivity.PT_APP_INFO,"A new form template has been created");
+		}else{
+			Log.i(MainActivity.PT_APP_INFO,"Existing form template being returned");
 		}
 		return formTemplate;
 	}

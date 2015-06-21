@@ -8,7 +8,9 @@
 
 package com.agileapps.pt.pojos;
 
-public enum InputType {
+import java.io.Serializable;
+
+public enum InputType  {
 
     TEXT,
     EMAIL,

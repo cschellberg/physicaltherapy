@@ -84,5 +84,8 @@ public class QuestionAnswer {
     {
     	answer=null;
     }
+	public void clearWidgetIds() {
+		widgetIdSet.clear();		
+	}
    
 }
