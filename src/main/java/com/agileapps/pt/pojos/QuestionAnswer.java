@@ -21,6 +21,9 @@ public class QuestionAnswer {
     private int id;
 	@Element
     private InputType inputType;
+	/*If this is 0 or greater, the answer will be used to form a composite key, for persisiting the document*/
+	@Element(required=false)
+    private int keyIndex=-1;
 	@Element
     private String question;
 	@Element(required=false)
@@ -63,7 +66,14 @@ public class QuestionAnswer {
 	}
 	
 	
-    public Integer[] getWidgetIds() {
+	
+    public int getKeyIndex() {
+		return keyIndex;
+	}
+	public void setKeyIndex(int keyIndex) {
+		this.keyIndex = keyIndex;
+	}
+	public Integer[] getWidgetIds() {
     	Integer returnArrays[]=new Integer[widgetIdSet.size()];
     	returnArrays= widgetIdSet.toArray( returnArrays);
     	return returnArrays;
@@ -72,14 +82,14 @@ public class QuestionAnswer {
 	public void addWidgetId(int widgetId) {
 		widgetIdSet.add(widgetId);
 	}
-	
+	   
 	@Override
 	public String toString() {
 		return "QuestionAnswer [id=" + id + ", inputType=" + inputType
-				+ ", question=" + question + ", answer=" + answer
-				+ ", choiceList=" + choiceList + "]";
+				+ ", keyIndex=" + keyIndex + ", question=" + question
+				+ ", answer=" + answer + ", choiceList=" + choiceList + "]";
 	}
-    
+	
 	public void clear()
     {
     	answer=null;

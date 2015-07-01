@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">PhysicalTherapy</string>
-    <string name="integer_entry">Integer Entry</string>
     <string name="action_settings">Settings</string>
-     <string name="title_section0">Physical Therapy Form 1</string>
-    <string name="title_section1">Physical Therapy Form 2</string>
-    <string name="title_section2">Physical Therapy Form 3</string>
-    <string name="title_section3">Physical Therapy Form 4</string>
     <string name="print_form">Print Form</string>
+    <string name="clear_form">Clear Form</string>
+    <string name="save_form">Save Form</string>
     <string name="exit_app">Exit App</string>
-
+    <string name="form_chooser">Form Chooser</string>
+    <string name="retrieve_or_delete">Retrieve or Delete an Existing Form</string>
+    <string name="client_label">Client</string>
+    <string name="form_label">Form</string>
+     <string name="date_label">Date</string>
+     <string name="file_label">File</string>
+    <string name="view_form">View Form</string>
+    <string name="delete_form">Delete Form</string>
+     <string name="home">Home</string>
 </resources>

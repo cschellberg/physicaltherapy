@@ -1,7 +1,11 @@
 package com.agileapps.pt.util;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.StringBufferInputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +14,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
+import com.agileapps.pt.exceptions.TemplateConfigurationException;
 import com.agileapps.pt.pojos.FormTemplate;
 
 public class PhysicalTherapyUtils {
+
+	public static final Object FILE_DELIMITER = "/";
+	public static final Object XML_EXTENSION =".xml";
+	public static final String DATE_FORMAT = "yyyyMMddHH";
 
 	public static FormTemplate parseFormTemplate(InputStream is)
 			throws Exception {
@@ -27,6 +36,21 @@ public class PhysicalTherapyUtils {
 		return formTemplate;
 	}
 
+	public static File getFilePath(FormTemplate formTemplate)
+	{
+			StringBuilder sb=new StringBuilder();
+			String clientKey=formTemplate.getKey();
+			DateFormat dateFormat=new SimpleDateFormat(DATE_FORMAT);
+			String dateString=dateFormat.format(new Date());
+			if ( StringUtils.isBlank(formTemplate.getFormName())){
+				throw new TemplateConfigurationException("Form has no name.  Please check template to make sure it is specified");
+			}
+			sb.append(FILE_DELIMITER).append(clientKey).append(FILE_DELIMITER)
+			.append(formTemplate.getFormName()).append(FILE_DELIMITER)
+			.append(dateString).append(FILE_DELIMITER).append(clientKey).append(XML_EXTENSION);
+			return new File(sb.toString());
+	}
+	
 	public static String answerReplacer(List<String> valueList,
 			String currentAnswer, String newAnswer, boolean isAdd) {
 		if ( valueList == null ){
@@ -96,5 +120,6 @@ public class PhysicalTherapyUtils {
 		}
 		return retValue;
 	}
+
 
 }

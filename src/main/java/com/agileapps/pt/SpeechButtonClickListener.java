@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 public class SpeechButtonClickListener implements OnClickListener {
 
-	public static final int REQ_CODE_SPEECH_INPUT = 1;
 	public static final String WIDGET_ID_KEY="widgetIdKey";
 	public static final String INPUT_TYPE_KEY="inputTypeKey";
 	private InputType inputType = InputType.TEXT;
@@ -49,7 +48,7 @@ public class SpeechButtonClickListener implements OnClickListener {
 		this.activity.answerWidgetId=answerWidgetId;
 		this.activity.answerWidgetDataType=inputType;
 			activity.startActivityForResult(intent,
-					REQ_CODE_SPEECH_INPUT);
+					MainActivity.REQ_CODE_SPEECH_INPUT);
 		} catch (ActivityNotFoundException a) {
 			Toast.makeText(view.getContext(), "Speech Not Supported",
 					Toast.LENGTH_SHORT).show();

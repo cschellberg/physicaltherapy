@@ -2,13 +2,6 @@ package com.agileapps.pt;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.agileapps.pt.pojos.FormTemplate;
-import com.agileapps.pt.pojos.FormTemplatePart;
-import com.agileapps.pt.pojos.InputType;
-import com.agileapps.pt.pojos.QuestionAnswer;
-import com.agileapps.pt.util.PhysicalTherapyUtils;
-
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
 import android.os.Bundle;
@@ -22,16 +15,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TableLayout;
-import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.agileapps.pt.pojos.FormTemplate;
+import com.agileapps.pt.pojos.FormTemplatePart;
+import com.agileapps.pt.pojos.InputType;
+import com.agileapps.pt.pojos.QuestionAnswer;
+import com.agileapps.pt.util.PhysicalTherapyUtils;
+
 public abstract class GenericFragment extends Fragment {
+	private static final int BOTTOM_MARGIN = 15;
+	private static final int LEFT_MARGIN =40;
 	protected int position;
 	protected FormTemplatePart formTemplatePart;
 	protected int layoutId;
@@ -120,21 +121,16 @@ public abstract class GenericFragment extends Fragment {
 				.getQuestionAnswerList()) {
 			try {
 				TableRow tableRow = new TableRow(this.getActivity());
-				TableRow.LayoutParams lp = new TableRow.LayoutParams(
-						LayoutParams.MATCH_PARENT,
-						LayoutParams.MATCH_PARENT,
-						LayoutParams.MATCH_PARENT);
-				tableRow.setLayoutParams(lp);
 				tableLayout.addView(tableRow);
 				TextView questionView = new TextView(this.getActivity());
-				questionView.setText(questionAnswer.getQuestion());
+				questionView.setText(questionAnswer.getQuestion().trim());
 				questionView.setTextSize(25f);
 				tableRow.addView(questionView);
 				if (questionAnswer.getInputType() != InputType.CHECKBOX
 						&& questionAnswer.getInputType() != InputType.RADIO) {
 					addTextBox(tableRow, questionAnswer);
 				} else if (questionAnswer.getInputType() == InputType.CHECKBOX) {
-					addCheckBox(tableRow, questionAnswer);
+						addCheckBox(tableRow, questionAnswer);
 				} else {
 					addRadio(tableRow, questionAnswer);
 				}
@@ -155,6 +151,8 @@ public abstract class GenericFragment extends Fragment {
 			tableRow.addView(checkBox);
 			int widgetId = getUniqueWidgetId();
 			checkBox.setId(widgetId);
+			((TableRow.LayoutParams )checkBox.getLayoutParams()).leftMargin=LEFT_MARGIN;
+			((TableRow.LayoutParams )checkBox.getLayoutParams()).bottomMargin=BOTTOM_MARGIN;
 			checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 				public void onCheckedChanged(CompoundButton compoundButton,
@@ -173,10 +171,14 @@ public abstract class GenericFragment extends Fragment {
 										true);
 						questionAnswer.setAnswer(answer.trim());
 					} else {
+						String oldAnswer=questionAnswer.getAnswer();
+						if (oldAnswer == null ){
+							oldAnswer="";
+						}
 						String answer = PhysicalTherapyUtils
 								.answerReplacer(
 										questionAnswer.getChoiceList(),
-										questionAnswer.getAnswer(), text,
+										 oldAnswer, text,
 										false);
 						questionAnswer.setAnswer(answer.trim());
 					}
@@ -206,7 +208,9 @@ public abstract class GenericFragment extends Fragment {
 			RadioButton radioButton = new RadioButton(this.getActivity());
 			radioButton.setId(getUniqueWidgetId());
 			radioButton.setText(value);
-			radioGroup.addView(radioButton);
+		    radioGroup.addView(radioButton);
+			((RadioGroup.LayoutParams )radioButton.getLayoutParams()).leftMargin=LEFT_MARGIN;
+			((RadioGroup.LayoutParams )radioButton.getLayoutParams()).bottomMargin=BOTTOM_MARGIN;
 		}
 		radioGroup
 				.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -217,8 +221,13 @@ public abstract class GenericFragment extends Fragment {
 								.getQuestionAnswer(radioGoup.getId());
 						RadioButton radioButton = (RadioButton) radioGroup
 								.findViewById(radioId);
-						questionAnswer.setAnswer(String.valueOf(radioButton
+						    if ( radioButton.isChecked())
+						    {	
+							questionAnswer.setAnswer(String.valueOf(radioButton
 								.getText()));
+						    }else{
+						    	questionAnswer.setAnswer("");
+						    }
 					}
 
 				});

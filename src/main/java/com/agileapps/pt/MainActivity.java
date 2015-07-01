@@ -1,11 +1,14 @@
 package com.agileapps.pt;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
@@ -18,12 +21,20 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.agileapps.pt.pojos.FormTemplate;
+import com.agileapps.pt.pojos.FormTemplatePart;
 import com.agileapps.pt.pojos.InputType;
+import com.agileapps.pt.pojos.QuestionAnswer;
+import com.agileapps.pt.tasks.GoogleDriveSaver;
 import com.agileapps.pt.util.PDFWriter;
+import com.agileapps.pt.util.PhysicalTherapyUtils;
 
 public class MainActivity extends FragmentActivity {
 
@@ -37,11 +48,17 @@ public class MainActivity extends FragmentActivity {
 	public static final String HOME_WIDGET_TYPE_TEXT = "text";
 	public static final String PT_APP_INFO = "ptAppInfo";
 	public static final String PRINTER_INFO = "printerInfo";
+	public static final int REQ_CODE_SPEECH_INPUT = 1;
+	public static final int REQUEST_ACCOUNT_PICKER = 2;
+	public static final int REQUEST_AUTHORIZATION = 3;
+	public static final int RESULT_STORE_FILE = 4;
+
+	public static final String FORM_DIR = "pt_forms";
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
-	InputType answerWidgetDataType= null;
-	Integer answerWidgetId=null;
+	InputType answerWidgetDataType = null;
+	Integer answerWidgetId = null;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -63,8 +80,7 @@ public class MainActivity extends FragmentActivity {
 					"Cannot load template file because " + ex.getMessage(),
 					Toast.LENGTH_LONG);
 			toast.show();
-			Log.e(PT_APP_INFO, "Cannot load template because " + ex,
-					ex);
+			Log.e(PT_APP_INFO, "Cannot load template because " + ex, ex);
 			return null;
 		}
 	}
@@ -73,6 +89,7 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		try {
+			Log.i(PT_APP_INFO, "Creating main activity layouts ");
 			setContentView(R.layout.activity_main);
 			FormTemplate formTemplate = getFormTemplate();
 			if (formTemplate == null) {
@@ -123,6 +140,17 @@ public class MainActivity extends FragmentActivity {
 							Toast.LENGTH_LONG).show();
 				}
 				break;
+			case R.id.clear_template:
+				formTemplate.clear();
+				clearWidgets(formTemplate);
+				break;
+			case R.id.save_template:
+				saveForm(formTemplate);
+				break;
+			case R.id.retrieve_or_delete:
+				Intent intent= new Intent(this,FormChooserActivity.class);
+				startActivity(intent);
+				break;
 			case R.id.exit_app:
 				finish();
 				break;
@@ -136,69 +164,96 @@ public class MainActivity extends FragmentActivity {
 		return true;
 	}
 
+	private void saveForm(FormTemplate formTemplate) throws IOException {
+		FileOutputStream fos = null;
+		try {
+			String filePath = PhysicalTherapyUtils.getFilePath(formTemplate)
+					.getAbsolutePath();
+			File filesDir = new File(Environment.getExternalStorageDirectory(),
+					FORM_DIR);
+			File formFile = new File(filesDir, filePath);
+			if (!filesDir.exists()) {
+				if (!filesDir.mkdir()) {
+					Log.e(PT_APP_INFO, "Unable to create pt_forms directory");
+				}
+			}
+			if ( ! formFile.getParentFile().mkdirs())
+			{
+				Log.e(PT_APP_INFO,"Cannot create directories "+formFile.getParentFile().getAbsolutePath());
+				return;
+			}
+			fos = new FileOutputStream(formFile);
+			fos.write("hello world".getBytes());
+		} catch (Exception ex) {
+			Log.e(PT_APP_INFO, "Unable to save form because  " + ex);
+		} finally {
+			if (fos != null) {
+				fos.close();
+			}
+		}
+	}
+
+	private void clearWidgets(FormTemplate formTemplate) {
+		for (FormTemplatePart formTemplatePart : formTemplate
+				.getFormTemplatePartList()) {
+			for (QuestionAnswer questionAnswer : formTemplatePart
+					.getQuestionAnswerList()) {
+				Integer widgetIds[] = questionAnswer.getWidgetIds();
+				for (Integer widgetId : widgetIds) {
+					View view = this.findViewById(widgetId);
+					if (view != null) {
+						if (view instanceof EditText) {
+							((EditText) view).setText("");
+						} else if (view instanceof CheckBox) {
+							CheckBox checkBox = (CheckBox) view;
+							checkBox.setChecked(false);
+						} else if (view instanceof RadioGroup) {
+							RadioGroup radioGroup = (RadioGroup) view;
+							for (int ii = 0; ii < radioGroup.getChildCount(); ii++) {
+								RadioButton radioButton = (RadioButton) radioGroup
+										.getChildAt(ii);
+								radioButton.setChecked(false);
+							}
+
+						}
+					}
+				}
+			}
+		}
+	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.i(PT_APP_INFO,"main activity  being restored");
+		Log.i(PT_APP_INFO, "main activity  being restored");
 	}
 
-	
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		Log.i(PT_APP_INFO,"main activity  being destroyed");
+		Log.i(PT_APP_INFO, "main activity  being destroyed");
 	}
-	
+
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}
 
-		
-		
 		@Override
 		public void restoreState(Parcelable state, ClassLoader loader) {
 			super.restoreState(state, loader);
-			Log.i(PT_APP_INFO,"fragement manager state being restored with state  "+state);
+			Log.i(PT_APP_INFO,
+					"fragement manager state being restored with state  "
+							+ state);
 		}
-
-
 
 		@Override
 		public Fragment getItem(int position) {
 			Fragment fragment = null;
-			switch (position) {
-			case 0:
-				Part0 part0 = new Part0();
-				part0.setTemplate(position);
-				fragment = part0;
-				break;
-			case 1:
-				Part1 part1 = new Part1();
-				part1.setTemplate(position);
-				fragment = part1;
-				break;
-			case 2:
-				Part2 part2 = new Part2();
-				part2.setTemplate(position);
-				fragment = part2;
-				break;
-			case 3:
-				Part3 part3 = new Part3();
-				part3.setTemplate(position);
-				fragment = part3;
-				break;
-
-			default:
-				part0 = new Part0();
-				part0.setTemplate(position);
-				fragment = part0;
-			}
-			Bundle args = new Bundle();
-			args.putInt(ARG_SECTION_NUMBER, position + 1);
-			fragment.setArguments(args);
-			return fragment;
+			GenericFragmentImpl genericFragment = new GenericFragmentImpl();
+			genericFragment.setTemplate(position);
+			return genericFragment;
 		}
 
 		@Override
@@ -208,69 +263,46 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			FormTemplate formTemplate=getFormTemplate();
-			if ( position < formTemplate.getFormTemplatePartList().size())
-			{
-			return formTemplate.getFormTemplatePartList().get(position).getTitle();
-			}else{
-				Log.e(PT_APP_INFO,"Requesting a template part that does not exist!  Position "+position+" number of template panels "
-			       +formTemplate.getFormTemplatePartList().size());
+			FormTemplate formTemplate = getFormTemplate();
+			if (position < formTemplate.getFormTemplatePartList().size()) {
+				return formTemplate.getFormTemplatePartList().get(position)
+						.getTitle();
+			} else {
+				Log.e(PT_APP_INFO,
+						"Requesting a template part that does not exist!  Position "
+								+ position + " number of template panels "
+								+ formTemplate.getFormTemplatePartList().size());
 				return "Not found";
 			}
 		}
 	}
 
-
-
-	public static class Part0 extends GenericFragment {
-		public Part0() {
+	public static class GenericFragmentImpl extends GenericFragment {
+		public GenericFragmentImpl() {
 			super();
-			layoutId = R.layout.part_0;
+			layoutId = R.layout.generic_fragment;
 			tableLayoutId = R.id.tableZeroLayout;
-		}
-	}
-
-	public static class Part1 extends GenericFragment {
-		public Part1() {
-			super();
-			layoutId = R.layout.part_1;
-			tableLayoutId = R.id.tableOneLayout;
-		}
-	}
-
-	public static class Part2 extends GenericFragment {
-		public Part2() {
-			super();
-			layoutId = R.layout.part_2;
-			tableLayoutId = R.id.tableTwoLayout;
-		}
-	}
-
-	public static class Part3 extends GenericFragment {
-		public Part3() {
-			super();
-			layoutId = R.layout.part_3;
-			tableLayoutId = R.id.tableThreeLayout;
 		}
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
-		case SpeechButtonClickListener.REQ_CODE_SPEECH_INPUT: {
+		case REQ_CODE_SPEECH_INPUT:
 			if (resultCode == RESULT_OK && null != data) {
-
 				ArrayList<String> result = data
 						.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 				String inputStr = result.get(0).trim();
-	            if (answerWidgetId == null){
-                	Log.e(PT_APP_INFO,"Widget id is null. Cant set text box without it");
-                	return;
-                }
-                if (answerWidgetDataType == null){
-                	Log.e(PT_APP_INFO,"Input type is null. Cant set text box without it");
-                	return;
-                }
+				if (answerWidgetId == null) {
+					Log.e(PT_APP_INFO,
+							"Widget id is null. Cant set text box without it");
+					return;
+				}
+				if (answerWidgetDataType == null) {
+					Log.e(PT_APP_INFO,
+							"Input type is null. Cant set text box without it");
+					return;
+				}
 
 				if (answerWidgetDataType == InputType.INTEGER) {
 					inputStr = "NA";
@@ -292,7 +324,6 @@ public class MainActivity extends FragmentActivity {
 			break;
 		}
 
-		}
 	}
 
 }
