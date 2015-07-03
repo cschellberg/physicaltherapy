@@ -3,10 +3,12 @@
     package="com.agileapps.pt"
     android:versionCode="1"
     android:versionName="1.0" >
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.GET_ACCOUNTS" />
-<uses-permission android:name="android.permission.USE_CREDENTIALS" />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-sdk
         android:minSdkVersion="19"
         android:targetSdkVersion="19" />
@@ -25,10 +27,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-                <activity
+        <activity
             android:name="com.agileapps.pt.FormChooserActivity"
             android:label="@string/form_chooser" >
-           </activity>
+        </activity>
+         <activity
+            android:name="com.agileapps.pt.ConfigurationActivity"
+            android:label="@string/configuration" >
+        </activity>
+         <activity
+            android:name="com.agileapps.pt.TemplateDownloaderActivity"
+            android:label="@string/template_downloader" >
+        </activity>
     </application>
 
 </manifest>

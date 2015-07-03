@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.agileapps.pt.manager.FormTemplateManager;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,7 +50,23 @@ public class FormChooserActivity extends Activity {
 				String filePath = clientString + "/" + formString + "/"
 						+ dateString;
 				File datesDir = new File(filesDir, filePath);
+				for ( File file:datesDir.listFiles()){
+					file.delete();
+				}
 				datesDir.delete();
+				Toast.makeText(FormChooserActivity.this,dateString+" directory deleted ", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(FormChooserActivity.this, MainActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		});
+		
+		Button cancelButton = (Button) this.findViewById(R.id.viewForm);
+		cancelButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View arg0) {
+				Intent mainIntent= new Intent(FormChooserActivity.this,MainActivity.class);
+				startActivity(mainIntent);
+				finish();
 			}
 		});
 		
@@ -76,6 +94,9 @@ public class FormChooserActivity extends Activity {
 				File formFile = new File(filesDir, filePath);
 				try {
 					FormTemplateManager.loadForm(formFile);
+					Intent intent = new Intent(FormChooserActivity.this, MainActivity.class);
+					startActivity(intent);
+					finish();
 				} catch (Exception ex) {
 					String errorStr="Unable to retrieve form because "+ex;
 					Toast.makeText(FormChooserActivity.this,errorStr, Toast.LENGTH_LONG).show();
@@ -85,23 +106,7 @@ public class FormChooserActivity extends Activity {
 		});
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.chooser_menu, menu);
-		return true;
 
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.action_home:
-			Intent intent = new Intent(this, MainActivity.class);
-			startActivity(intent);
-			break;
-		}
-		return true;
-	}
 
 	@Override
 	protected void onResume() {

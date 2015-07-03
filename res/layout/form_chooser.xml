@@ -103,6 +103,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/delete_form" />
+
+<Button
+    android:id="@+id/cancelForm"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/cancel" />
 </LinearLayout>
+
 
 </LinearLayout>

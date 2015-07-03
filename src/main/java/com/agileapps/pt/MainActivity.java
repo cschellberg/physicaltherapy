@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.simpleframework.xml.core.Persister;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.agileapps.pt.manager.FormTemplateManager;
 import com.agileapps.pt.pojos.FormTemplate;
 import com.agileapps.pt.pojos.FormTemplatePart;
 import com.agileapps.pt.pojos.InputType;
@@ -148,9 +151,20 @@ public class MainActivity extends FragmentActivity {
 				saveForm(formTemplate);
 				break;
 			case R.id.retrieve_or_delete:
-				Intent intent= new Intent(this,FormChooserActivity.class);
-				startActivity(intent);
+				Intent retrieveFormIntent= new Intent(this,FormChooserActivity.class);
+				startActivity(retrieveFormIntent);
+				finish();
 				break;
+			case R.id.download_templates:
+				Intent downloadTemplatesIntent= new Intent(this,TemplateDownloaderActivity.class);
+				startActivity( downloadTemplatesIntent);
+				finish();
+				break;
+			case R.id.action_settings:
+				Intent settingsIntent= new Intent(this,ConfigurationActivity.class);
+				startActivity( settingsIntent);
+				finish();
+			break;
 			case R.id.exit_app:
 				finish();
 				break;
@@ -183,7 +197,8 @@ public class MainActivity extends FragmentActivity {
 				return;
 			}
 			fos = new FileOutputStream(formFile);
-			fos.write("hello world".getBytes());
+			Persister persister=new Persister();
+			persister.write(formTemplate, fos);
 		} catch (Exception ex) {
 			Log.e(PT_APP_INFO, "Unable to save form because  " + ex);
 		} finally {

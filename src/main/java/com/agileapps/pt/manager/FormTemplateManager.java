@@ -1,4 +1,4 @@
-package com.agileapps.pt;
+package com.agileapps.pt.manager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,33 +8,40 @@ import java.util.Map;
 
 import android.util.Log;
 
+import com.agileapps.pt.MainActivity;
+import com.agileapps.pt.pojos.Config;
 import com.agileapps.pt.pojos.FormTemplate;
 import com.agileapps.pt.util.PhysicalTherapyUtils;
 
 public class FormTemplateManager {
 
-	private static Map<String, FormTemplate> formTemplateMap = new HashMap<String, FormTemplate>();
-
-	private final static String DEFAULT_CLIENT_INFO_FORM_NAME = "Default Client Info";
-
-	private final static String DEFAULT_FORM_NAME = "Default";
-
+	public final static String DEFAULT_CLIENT_INFO_FORM_NAME = "Default Client Info";
+	public final static String DEFAULT_FORM_NAME = "Default";
 	private final static String DEFAULT_CLIENT_INFO_TEMPLATE = "/assets/DefaultClientInfoTemplate.xml";
-
 	private final static String DEFAULT_FORM_TEMPLATE = "/assets/DefaultFormTemplate.xml";
+	private static Map<String, FormTemplate> formTemplateMap = new HashMap<String, FormTemplate>();
+	
+	private static Map <String,String> formNameToDirMap= new HashMap<String, String>();
+	
+	static{
+		 formNameToDirMap.put(DEFAULT_CLIENT_INFO_FORM_NAME, DEFAULT_CLIENT_INFO_TEMPLATE);
+		 formNameToDirMap.put(DEFAULT_FORM_NAME, DEFAULT_FORM_TEMPLATE);
+	}
+
 
 	public static FormTemplate getFormTemplate() throws Exception {
-		return getFormTemplate(DEFAULT_CLIENT_INFO_FORM_NAME,
-				DEFAULT_CLIENT_INFO_TEMPLATE, DEFAULT_FORM_NAME,
-				DEFAULT_FORM_TEMPLATE);
+		Config config=ConfigManager.getConfig();
+		return getFormTemplate(config.getDefaultClientInfoTemplate(),config.getDefaultFormTemplate());
 	}
 
 	public static synchronized FormTemplate getFormTemplate(
-			String clientInfoTemplateName, String clientInfoTemplateResource,
-			String formTemplateName, String formTemplateResource)
+			String clientInfoTemplateName, String formTemplateName)
 			throws Exception {
 		FormTemplate clientInfoTemplate = formTemplateMap
 				.get(clientInfoTemplateName);
+		Config config=ConfigManager.getConfig();
+		String clientInfoTemplateResource=formNameToDirMap.get(config.getDefaultClientInfoTemplate());
+		String formTemplateResource=formNameToDirMap.get(config.getDefaultFormTemplate());
 		if (clientInfoTemplate == null) {
 			clientInfoTemplate = PhysicalTherapyUtils
 					.parseFormTemplate(FormTemplateManager.class

@@ -1,0 +1,53 @@
+package com.agileapps.pt.tasks;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+import com.agileapps.pt.MainActivity;
+import com.agileapps.pt.TemplateDownloaderActivity;
+import com.agileapps.pt.manager.ConfigManager;
+import com.agileapps.pt.pojos.Config;
+import com.agileapps.pt.pojos.StatusAndResponse;
+import com.agileapps.pt.pojos.TemplateResponse;
+import com.agileapps.pt.util.HttpUtils;
+import com.google.gson.Gson;
+
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+public class TemplatesRetrieverTask extends AsyncTask<Object, Integer, String> {
+
+	@Override
+	protected String doInBackground(Object... params) {
+		String result = "None";
+		Spinner templateSelector = (Spinner) params[0];
+		TextView statusView = (TextView) params[1];
+		try {
+			Config config = ConfigManager.getConfig();
+			StringBuilder sb = new StringBuilder();
+			sb.append(config.getTemplateURL()).append("/")
+					.append("templates.php").append("?company=")
+					.append(config.getCompany());
+			StatusAndResponse statusAndResponse = HttpUtils.getHttpResponse(sb
+					.toString());
+			Gson gson = new Gson();
+			TemplateResponse templateResponse = gson.fromJson(
+					statusAndResponse.message, TemplateResponse.class);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+					templateSelector.getContext(),
+					android.R.layout.simple_spinner_item,
+					templateResponse.getTemplates());
+			templateSelector.setAdapter(adapter);
+		} catch (Exception ex) {
+			String errorStr = "Unable to get templates because " + ex;
+			Log.e(MainActivity.PT_APP_INFO, errorStr);
+			statusView.setText(errorStr);
+		}
+		return result;
+	}
+
+}

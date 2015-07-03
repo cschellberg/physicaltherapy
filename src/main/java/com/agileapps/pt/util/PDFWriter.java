@@ -48,6 +48,7 @@ public class PDFWriter {
 		private static final float TITLE_TEXT_SIZE = 18;
 		private static final float QUESTION_TEXT_SIZE = 14;
 		private static final int SPLIT_QUESTION = 65;
+		private static final int PAGE_HEIGHT = 670;
 		int startingVerticalPosition = 60;
 		int startingLeftMargin = 54;
 		private Activity activity;
@@ -94,24 +95,7 @@ public class PDFWriter {
 				ParcelFileDescriptor destination,
 				CancellationSignal cancellationSignal,
 				WriteResultCallback callback) {
-			for (int i = 0; i < totalpages; i++) {
-				if (pageInRange(pageRanges, i)) {
-					PageInfo newPage = new PageInfo.Builder(pageWidth,
-							pageHeight, i).create();
-
-					PdfDocument.Page page = ptPdfDocument.startPage(newPage);
-
-					if (cancellationSignal.isCanceled()) {
-						callback.onWriteCancelled();
-						ptPdfDocument.close();
-						ptPdfDocument = null;
-						return;
-					}
-					drawPage(page, i);
-					ptPdfDocument.finishPage(page);
-				}
-			}
-
+			drawPages();
 			try {
 				ptPdfDocument.writeTo(new FileOutputStream(destination
 						.getFileDescriptor()));
@@ -126,7 +110,11 @@ public class PDFWriter {
 			callback.onWriteFinished(pageRanges);
 		}
 
-		private void drawPage(Page page, int pageNumber) {
+		private void drawPages( ) {
+			int pageNumber=1;
+			PageInfo newPage = new PageInfo.Builder(pageWidth,
+					pageHeight, pageNumber).create();
+			PdfDocument.Page page = ptPdfDocument.startPage(newPage);
 			Canvas canvas = page.getCanvas();
 			pageNumber++; // Make sure page numbers start at 1
 			int longestQuestion = 10;
@@ -168,7 +156,15 @@ public class PDFWriter {
 					}
 				}
 				Log.i(MainActivity.PRINTER_INFO,"line "+line+" xy info "+xy);
+				if ( xy.y > PAGE_HEIGHT ){
+					xy = new XY(startingLeftMargin, startingVerticalPosition);
+					ptPdfDocument.finishPage(page);
+					newPage = new PageInfo.Builder(pageWidth,
+							pageHeight, pageNumber).create();
+					 page = ptPdfDocument.startPage(newPage);
+				}
 			}
+			ptPdfDocument.finishPage(page);
 		}
 
 		private XY printTitle(Canvas canvas, Paint paint, XY xy, String title) {

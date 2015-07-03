@@ -14,5 +14,16 @@
      <string name="file_label">File</string>
     <string name="view_form">View Form</string>
     <string name="delete_form">Delete Form</string>
+    <string name="save_config">Save Config</string>
      <string name="home">Home</string>
+     <string name="company_label">Company</string>
+     <string name="default_form_label">Default Form</string>
+     <string name="default_client_info_label">Client Info Form</string>
+     <string name="cancel">Cancel</string>
+     <string name="configuration">Configuration</string>
+     <string name="template_url_label">Template URL</string>
+     <string name="template_downloader">Template Downloader</string>
+     <string name="download_templates">Download Templates</string>
+     <string name="download_template">Download Template</string>
+     <string name="template_label">Template</string>
 </resources>
