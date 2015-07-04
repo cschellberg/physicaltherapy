@@ -1,7 +1,9 @@
 package com.agileapps.pt.util;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Scanner;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -20,19 +22,18 @@ public class HttpUtils {
 		HttpClient client= new DefaultHttpClient();
 		HttpUriRequest request=new HttpGet(url);
 		final StringBuilder stringBuilder=new StringBuilder();
-		String response=client.execute(request,new ResponseHandler<String>(){
-			public  String handleResponse(HttpResponse response)
+		int responseCode=client.execute(request,new ResponseHandler<Integer>(){
+			public  Integer handleResponse(HttpResponse response)
 					throws ClientProtocolException, IOException {
 				HttpEntity entity=response.getEntity();
-				InputStream is=entity.getContent();
-				byte buffer []=new byte[10000];
-				while ( is.read(buffer) > 0){
-					stringBuilder.append(new String(buffer, "UTF-8"));
-				}				
-				return response.getStatusLine().getStatusCode()+":"+response.getStatusLine().getReasonPhrase();
+				Scanner scanner= new Scanner(entity.getContent());
+				while ( scanner.hasNextLine()){
+					stringBuilder.append(scanner.nextLine().trim()).append("\n");;
+				}
+				return response.getStatusLine().getStatusCode();
 			}
 		}
 		);
-		return (new StatusAndResponse(response,stringBuilder.toString()));
+		return (new StatusAndResponse(responseCode,stringBuilder.toString().trim()));
 	}
 }

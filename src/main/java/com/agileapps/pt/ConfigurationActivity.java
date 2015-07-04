@@ -1,7 +1,11 @@
 package com.agileapps.pt;
 
+import java.util.List;
+
 import com.agileapps.pt.manager.ConfigManager;
+import com.agileapps.pt.manager.FormTemplateManager;
 import com.agileapps.pt.pojos.Config;
+import com.agileapps.pt.util.PhysicalTherapyUtils;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,8 +14,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class ConfigurationActivity extends Activity {
@@ -32,12 +38,36 @@ public class ConfigurationActivity extends Activity {
 		}
 		EditText companyEdit = (EditText) this.findViewById(R.id.company);
 		companyEdit.setText(config.getCompany());
-		EditText defaultClientInfoEdit = (EditText) this
-				.findViewById(R.id.defaultClientInfoForm);
-		defaultClientInfoEdit.setText(config.getDefaultClientInfoTemplate());
-		EditText defaultFormEdit = (EditText) this
-				.findViewById(R.id.defaultForm);
-		defaultFormEdit.setText(config.getDefaultFormTemplate());
+
+		try {
+			Spinner clientTemplateSelector = (Spinner) findViewById(R.id.clientTemplateSelector);
+			List<String> clientTemplateList = FormTemplateManager
+					.getClientInfoFormTemplateNames();
+			String[] items = new String[clientTemplateList.size()];
+	
+			clientTemplateList.toArray(items);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_spinner_item, items);
+			clientTemplateSelector.setAdapter(adapter);
+			clientTemplateSelector.setSelection(PhysicalTherapyUtils.getSelectedIndex(config.getDefaultClientInfoTemplate(), items));
+
+			Spinner templateSelector = (Spinner) findViewById(R.id.templateSelector);
+			List<String> templateList = FormTemplateManager
+					.getFormTemplateNames();
+			items = new String[templateList.size()];
+			templateList.toArray(items);
+			adapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_spinner_item, items);
+			templateSelector.setAdapter(adapter);
+			templateSelector.setSelection(PhysicalTherapyUtils.getSelectedIndex(config.getDefaultFormTemplate(), items));
+
+		} catch (Exception ex) {
+			String errorStr = "Cannot get template name because " + ex;
+			Log.e(MainActivity.PT_APP_INFO, errorStr);
+			Toast.makeText(this, errorStr, Toast.LENGTH_LONG).show();
+			return;
+		}
+
 		EditText templateUrlEdit = (EditText) this
 				.findViewById(R.id.templateUrl);
 		templateUrlEdit.setText(config.getTemplateURL());
@@ -62,18 +92,19 @@ public class ConfigurationActivity extends Activity {
 		});
 
 	}
-
+	
+	
 	protected void saveConfig() {
 		try {
 			Config config = new Config();
 			EditText companyEdit = (EditText) this.findViewById(R.id.company);
 			config.setCompany(companyEdit.getText().toString());
-			EditText defaultClientInfoEdit = (EditText) this
-					.findViewById(R.id.defaultClientInfoForm);
-			config.setDefaultClientInfoTemplate(defaultClientInfoEdit.getText().toString());
-			EditText defaultFormEdit = (EditText) this
-					.findViewById(R.id.defaultForm);
-			config.setDefaultFormTemplate(defaultFormEdit.getText().toString());
+			Spinner clientTemplateSelector = (Spinner) findViewById(R.id.clientTemplateSelector);
+			config.setDefaultClientInfoTemplate(clientTemplateSelector
+					.getSelectedItem().toString());
+			Spinner templateSelector = (Spinner) findViewById(R.id.templateSelector);
+			config.setDefaultFormTemplate(templateSelector.getSelectedItem()
+					.toString());
 			EditText templateUrlEdit = (EditText) this
 					.findViewById(R.id.templateUrl);
 			config.setTemplateURL(templateUrlEdit.getText().toString());

@@ -2,6 +2,7 @@
 <FormTemplate>
     <formName>Default Client Info</formName>
     <clientId>1</clientId>
+    <permanent>true</permanent>
 	<id>1</id>
 	<formTemplatePartList>
 		<formTemplatePart>

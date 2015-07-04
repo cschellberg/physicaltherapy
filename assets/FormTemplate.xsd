@@ -10,6 +10,7 @@
 				<xs:element name="clientId" type="xs:int" />
 				<xs:element name="dateString"  type="xs:string"  />
 				<xs:element name="formName"  type="xs:string" />
+				<xs:element name="permanent"  type="xs:boolean" />
 				<xs:element name="formTemplatePartList">
 					<xs:complexType>
 						<xs:sequence>

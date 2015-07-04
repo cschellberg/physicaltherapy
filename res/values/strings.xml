@@ -26,4 +26,5 @@
      <string name="download_templates">Download Templates</string>
      <string name="download_template">Download Template</string>
      <string name="template_label">Template</string>
+     <string name="change_template">Change Template</string>
 </resources>

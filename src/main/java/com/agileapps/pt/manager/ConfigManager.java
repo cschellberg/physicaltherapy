@@ -26,7 +26,7 @@ public class ConfigManager {
 				CONFIG_FILE);
 		if (configFile.exists()) {
 			Persister persister=new Persister();
-			persister.read(Config.class, configFile);
+			config=persister.read(Config.class, configFile);
 
 		} else {
 			config = new Config();

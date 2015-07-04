@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.agileapps.pt.manager.ConfigManager;
 import com.agileapps.pt.pojos.Config;
+import com.agileapps.pt.tasks.TemplateDownloadTask;
 import com.agileapps.pt.tasks.TemplatesRetrieverTask;
 
 import android.app.Activity;
@@ -41,12 +42,14 @@ public class TemplateDownloaderActivity extends Activity {
 			Toast.makeText(this, errorStr, Toast.LENGTH_LONG).show();
 			return;
 		}
-		Spinner templateSelector = (Spinner) findViewById(R.id.templateSelector);
+		final Spinner templateSelector = (Spinner) findViewById(R.id.templateSelector);
 		TextView statusView=(TextView)findViewById(R.id.downloadTemplateStatus);
         (new TemplatesRetrieverTask()).execute( templateSelector,statusView);
 		Button downloadTemplateButton = (Button) this.findViewById(R.id.downloadTemplate);
 		downloadTemplateButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
+				String templateFileName = (String) templateSelector.getSelectedItem();
+				(new TemplateDownloadTask()).execute( templateFileName);
 				Intent intent = new Intent(TemplateDownloaderActivity.this,
 						MainActivity.class);
 				startActivity(intent);

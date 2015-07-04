@@ -6,7 +6,7 @@ import com.agileapps.pt.manager.FormTemplateManager;
 
 public class Config {
 
-	private static final String TEMPLATE_URL = "http://pajavaapps.com/";
+	private static final String TEMPLATE_URL = "http://pajavaapps.com/pt/";
 
 	@Element
 	private String company;

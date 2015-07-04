@@ -165,6 +165,12 @@ public class MainActivity extends FragmentActivity {
 				startActivity( settingsIntent);
 				finish();
 			break;
+			case R.id.change_template:
+				Intent changeTemplatesIntent= new Intent(this,ChangeTemplateActivity.class);
+				startActivity( changeTemplatesIntent);
+				finish();
+			break;
+
 			case R.id.exit_app:
 				finish();
 				break;

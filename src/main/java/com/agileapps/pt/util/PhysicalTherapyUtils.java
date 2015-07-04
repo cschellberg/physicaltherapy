@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
 import org.simpleframework.xml.Serializer;
@@ -27,9 +28,9 @@ public class PhysicalTherapyUtils {
 			throws Exception {
 		Serializer serial = new Persister();
 		StringBuilder sb = new StringBuilder();
-		byte buffer[] = new byte[1000];
-		while ((is.read(buffer)) >= 0) {
-			sb.append(new String(buffer));
+		Scanner scanner=new Scanner(is);
+		while (scanner.hasNext()) {
+			sb.append(scanner.nextLine().trim()).append("\n");
 		}
 		FormTemplate formTemplate = serial.read(FormTemplate.class,
 				new StringBufferInputStream(sb.toString()));
@@ -121,5 +122,20 @@ public class PhysicalTherapyUtils {
 		return retValue;
 	}
 
+
+	public static int getSelectedIndex(String selectItem, String items[])
+	{
+		int retValue=0;
+		int cntr=0;
+		for (String item:items){
+			if ( item.equals(selectItem))
+			{
+				retValue=cntr;
+				break;
+			}
+			cntr++;
+		}
+		return retValue;
+	}
 
 }

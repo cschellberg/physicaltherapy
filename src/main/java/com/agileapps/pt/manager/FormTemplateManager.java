@@ -3,14 +3,19 @@ package com.agileapps.pt.manager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import android.os.Environment;
 import android.util.Log;
 
 import com.agileapps.pt.MainActivity;
+import com.agileapps.pt.exceptions.TemplateConfigurationException;
 import com.agileapps.pt.pojos.Config;
 import com.agileapps.pt.pojos.FormTemplate;
+import com.agileapps.pt.tasks.TemplateDownloadTask;
 import com.agileapps.pt.util.PhysicalTherapyUtils;
 
 public class FormTemplateManager {
@@ -19,74 +24,113 @@ public class FormTemplateManager {
 	public final static String DEFAULT_FORM_NAME = "Default";
 	private final static String DEFAULT_CLIENT_INFO_TEMPLATE = "/assets/DefaultClientInfoTemplate.xml";
 	private final static String DEFAULT_FORM_TEMPLATE = "/assets/DefaultFormTemplate.xml";
-	private static Map<String, FormTemplate> formTemplateMap = new HashMap<String, FormTemplate>();
+	private static Map<String, FormTemplate>formTemplateMap;
+	public static String temporaryFormTemplateOverride=null;
+	private static FormTemplate currentFormTemplate=null;
 	
-	private static Map <String,String> formNameToDirMap= new HashMap<String, String>();
+		
 	
-	static{
-		 formNameToDirMap.put(DEFAULT_CLIENT_INFO_FORM_NAME, DEFAULT_CLIENT_INFO_TEMPLATE);
-		 formNameToDirMap.put(DEFAULT_FORM_NAME, DEFAULT_FORM_TEMPLATE);
+	public static void  initFormTemplateMap() throws Exception
+	{
+		formTemplateMap = new HashMap<String, FormTemplate>();
+		FormTemplate defaultClientInfoTemplate = PhysicalTherapyUtils
+				.parseFormTemplate(FormTemplateManager.class
+						.getResourceAsStream(DEFAULT_CLIENT_INFO_TEMPLATE));
+		FormTemplate defaultFormTemplate = PhysicalTherapyUtils
+				.parseFormTemplate(FormTemplateManager.class
+						.getResourceAsStream(DEFAULT_FORM_TEMPLATE));
+		formTemplateMap.put(DEFAULT_CLIENT_INFO_FORM_NAME, defaultClientInfoTemplate);
+		formTemplateMap.put(DEFAULT_FORM_NAME, defaultFormTemplate);
+			File templatesDir = new File(Environment.getExternalStorageDirectory(),
+					TemplateDownloadTask.TEMPLATES);
+			for ( File file:templatesDir.listFiles()){
+				if (file.getName().endsWith("xml")){
+					try
+					{
+					FormTemplate formTemplate = PhysicalTherapyUtils
+							.parseFormTemplate(new FileInputStream(file));
+					formTemplateMap.put(formTemplate.getFormName(), formTemplate);
+					}catch(Exception ex){
+						Log.e(MainActivity.PT_APP_INFO,"Unable to load template "+file.getName()+" because "+ex);
+					}
+				}
+			}
+
+
 	}
 
-
+	private synchronized static void setFormTemplateMap() throws Exception
+	{
+		if (formTemplateMap == null) {
+			initFormTemplateMap();
+		}
+	}
+	
+	private static String getFormTemplateName(Config config)
+	{
+		if (temporaryFormTemplateOverride != null ){
+			return temporaryFormTemplateOverride;
+		}else{
+			return config.getDefaultFormTemplate();
+		}
+	}
+	
 	public static FormTemplate getFormTemplate() throws Exception {
 		Config config=ConfigManager.getConfig();
-		return getFormTemplate(config.getDefaultClientInfoTemplate(),config.getDefaultFormTemplate());
+		return getFormTemplate(config.getDefaultClientInfoTemplate(),getFormTemplateName(config));
 	}
 
 	public static synchronized FormTemplate getFormTemplate(
 			String clientInfoTemplateName, String formTemplateName)
 			throws Exception {
-		FormTemplate clientInfoTemplate = formTemplateMap
-				.get(clientInfoTemplateName);
-		Config config=ConfigManager.getConfig();
-		String clientInfoTemplateResource=formNameToDirMap.get(config.getDefaultClientInfoTemplate());
-		String formTemplateResource=formNameToDirMap.get(config.getDefaultFormTemplate());
+		setFormTemplateMap();
+		if ( currentFormTemplate == null || !currentFormTemplate.getFormName().equals(formTemplateName))
+		{	
+		FormTemplate clientInfoTemplate = formTemplateMap.get(clientInfoTemplateName);
 		if (clientInfoTemplate == null) {
-			clientInfoTemplate = PhysicalTherapyUtils
-					.parseFormTemplate(FormTemplateManager.class
-							.getResourceAsStream(clientInfoTemplateResource));
-			if (clientInfoTemplate == null) {
-				throw new RuntimeException(
-						"Unable to find client info template with name "
-								+ clientInfoTemplateResource);
-			} else {
-				formTemplateMap.put(clientInfoTemplate.getFormName(),
-						clientInfoTemplate);
-			}
-			Log.i(MainActivity.PT_APP_INFO,
-					"A new form template has been created");
-		} else {
-			Log.i(MainActivity.PT_APP_INFO,
-					"Existing form template being returned");
+			throw new TemplateConfigurationException(
+					"No template found with name "
+							+ clientInfoTemplateName);
 		}
 		FormTemplate formTemplate = formTemplateMap.get(formTemplateName);
 		if (formTemplate == null) {
-			formTemplate = PhysicalTherapyUtils
-					.parseFormTemplate(FormTemplateManager.class
-							.getResourceAsStream(formTemplateResource));
-			if (formTemplate == null) {
-				throw new RuntimeException("Unable to find template with name "
-						+ formTemplateResource);
-			} else {
-				formTemplate.getFormTemplatePartList().addAll(0,
-						clientInfoTemplate.getFormTemplatePartList());
-				formTemplateMap.put(formTemplate.getFormName(), formTemplate);
-			}
-			Log.i(MainActivity.PT_APP_INFO,
-					"A new form template has been created");
-		} else {
-			Log.i(MainActivity.PT_APP_INFO,
-					"Existing form template being returned");
+			throw new TemplateConfigurationException(
+					"No template found with name "
+							+ formTemplateName);
 		}
-		return formTemplate;
+		currentFormTemplate =new FormTemplate(clientInfoTemplate,formTemplate);
+		}
+		return currentFormTemplate;
 	}
 
+	public static List<String> getClientInfoFormTemplateNames() throws Exception{
+		setFormTemplateMap();
+		List<String>retList=new ArrayList<String>();
+		for ( FormTemplate formTemplate:formTemplateMap.values()){
+			if ( formTemplate.getPermanent()){
+				retList.add(formTemplate.getFormName());
+			}
+		}
+		return retList;
+	}
+	
+	public static List<String> getFormTemplateNames() throws Exception{
+		setFormTemplateMap();
+		List<String>retList=new ArrayList<String>();
+		for ( FormTemplate formTemplate:formTemplateMap.values()){
+			if (!  formTemplate.getPermanent()){
+				retList.add(formTemplate.getFormName());
+			}
+		}
+		return retList;
+	}
+	
 	public static void loadForm(File formFile) throws FileNotFoundException,
 			Exception {
 		FormTemplate formTemplate = PhysicalTherapyUtils
 				.parseFormTemplate(new FileInputStream(formFile));
-		formTemplateMap.put(formTemplate.getFormName(), formTemplate);
+		temporaryFormTemplateOverride=formTemplate.getFormName();
+		currentFormTemplate=formTemplate;
 
 	}
 }

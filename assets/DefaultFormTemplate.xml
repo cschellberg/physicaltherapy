@@ -2,6 +2,7 @@
 <FormTemplate>
 	<id>2</id>
 	<formName>Default</formName>
+	   <permanent>false</permanent>
 	<formTemplatePartList>
 		<formTemplatePart>
 			<id>2</id>

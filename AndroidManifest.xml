@@ -39,6 +39,10 @@
             android:name="com.agileapps.pt.TemplateDownloaderActivity"
             android:label="@string/template_downloader" >
         </activity>
+        <activity
+            android:name="com.agileapps.pt.ChangeTemplateActivity"
+            android:label="@string/change_template" >
+        </activity>
     </application>
 
 </manifest>

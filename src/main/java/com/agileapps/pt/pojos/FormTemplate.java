@@ -34,6 +34,9 @@ public class FormTemplate {
 	@Element
 	private int id;
 
+	@Element(required=false)
+	private Boolean permanent=Boolean.FALSE;
+	
 	@Element(required = false)
 	private String clientId;
 
@@ -45,6 +48,19 @@ public class FormTemplate {
 
 	@ElementList
 	private List<FormTemplatePart> formTemplatePartList;
+
+	public FormTemplate()
+	{
+		
+	}
+	
+	public FormTemplate(FormTemplate firstTemplate,FormTemplate secondTemplate) {
+		this.formTemplatePartList=new ArrayList<FormTemplatePart>();
+		this.formTemplatePartList.addAll(firstTemplate.formTemplatePartList);
+		this.formTemplatePartList.addAll(secondTemplate.formTemplatePartList);
+		this.setClientId(secondTemplate.clientId);
+		this.setFormName(secondTemplate.formName);
+	}
 
 	public int getId() {
 		return id;
@@ -76,6 +92,14 @@ public class FormTemplate {
 
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
+	}
+
+	public Boolean getPermanent() {
+		return permanent;
+	}
+
+	public void setPermanent(Boolean permanent) {
+		this.permanent = permanent;
 	}
 
 	public List<FormTemplatePart> getFormTemplatePartList() {

@@ -1,12 +1,11 @@
 package com.agileapps.pt.pojos;
 
 public class StatusAndResponse {
-	public final String response;
+	public final int statusCode;
 	public final String message;
 
-	public StatusAndResponse(String response, String message) {
-		super();
-		this.response = response;
+	public StatusAndResponse(int statusCode, String message) {
+		this.statusCode=statusCode;
 		this.message = message;
 	}
 }
