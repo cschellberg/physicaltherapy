@@ -2,8 +2,6 @@ package com.agileapps.pt;
 
 import org.apache.commons.lang3.StringUtils;
 
-import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProviderInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -20,6 +18,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -34,15 +33,9 @@ import com.agileapps.pt.util.PhysicalTherapyUtils;
 public abstract class GenericFragment extends Fragment {
 	private static final int BOTTOM_MARGIN = 15;
 	private static final int LEFT_MARGIN =40;
-	protected int position;
 	protected FormTemplatePart formTemplatePart;
-	protected int layoutId;
-	protected int tableLayoutId;
 
-	public void setTemplate(int position) {
-		this.position = position;
-	}
-
+	
 	
 	@Override
 	public void onResume() {
@@ -101,23 +94,25 @@ public abstract class GenericFragment extends Fragment {
 	    }
 	}
 
-	
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		Log.i(MainActivity.PT_APP_INFO,"formTemplate part  "+((formTemplatePart != null)?formTemplatePart.getTitle():"null formtemplate part")+" being destroyed");
-	}
-
 
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		String tag=this.getTag();
+		String positionStr=tag.substring(MainActivity.FRAGMENT_PREFIX.length());
+		int position=Integer.parseInt(positionStr.trim());
 		this.formTemplatePart = getFormTemplate().getFormTemplatePartList()
 				.get(position);
-		View rootView = inflater.inflate(layoutId, container, false);
-		TableLayout tableLayout = (TableLayout) rootView
-				.findViewById(tableLayoutId);
+		ViewGroup rootView =(ViewGroup) inflater.inflate(R.layout.generic_fragment, container, false);
+			ScrollView scrollView=new ScrollView(this.getActivity());
+			rootView.addView(scrollView);
+		TableLayout tableLayout=new TableLayout(this.getActivity());
+		//scrollView.addView(tableLayout);
+		scrollView.addView(tableLayout);
+
+		/*TableLayout tableLayout = (TableLayout) rootView
+				.findViewById(tableLayoutId);*/
 		for (final QuestionAnswer questionAnswer : formTemplatePart
 				.getQuestionAnswerList()) {
 			try {
@@ -150,7 +145,7 @@ public abstract class GenericFragment extends Fragment {
 			CheckBox checkBox = new CheckBox(this.getActivity());
 			checkBox.setText(value);
 			tableRow.addView(checkBox);
-			int widgetId = getUniqueWidgetId();
+			int widgetId = MainActivity.getUniqueWidgetId(this.getActivity());
 			checkBox.setId(widgetId);
 			((TableRow.LayoutParams )checkBox.getLayoutParams()).leftMargin=LEFT_MARGIN;
 			((TableRow.LayoutParams )checkBox.getLayoutParams()).bottomMargin=BOTTOM_MARGIN;
@@ -207,7 +202,7 @@ public abstract class GenericFragment extends Fragment {
 		radioGroup.setOrientation(LinearLayout.HORIZONTAL);
 		for (String value : questionAnswer.getChoiceList()) {
 			RadioButton radioButton = new RadioButton(this.getActivity());
-			radioButton.setId(getUniqueWidgetId());
+			radioButton.setId(MainActivity.getUniqueWidgetId(this.getActivity()));
 			radioButton.setText(value);
 		    radioGroup.addView(radioButton);
 			((RadioGroup.LayoutParams )radioButton.getLayoutParams()).leftMargin=LEFT_MARGIN;
@@ -232,36 +227,19 @@ public abstract class GenericFragment extends Fragment {
 					}
 
 				});
-		int widgetId = getUniqueWidgetId();
+		int widgetId = MainActivity.getUniqueWidgetId(this.getActivity());
 		radioGroup.setId(widgetId);
 		questionAnswer.addWidgetId(widgetId);
 		tableRow.addView(radioGroup);
 	}
 
-	private int getUniqueWidgetId() {
-		AppWidgetProviderInfo appWidgetInfo = null;
-		int counter = 0;
-		while (appWidgetInfo == null && counter < 10000) {
-			counter++;
-			appWidgetInfo = AppWidgetManager
-					.getInstance(this.getActivity()).getAppWidgetInfo(
-							MainActivity.idCounter);
-			if (appWidgetInfo == null) {
-				int retId = MainActivity.idCounter;
-				MainActivity.idCounter++;
-				return retId;
-			}
-		}
-		throw new RuntimeException(
-				"Cannot find uniqueId to assign to widget");
-	}
-
+	
 	private void addTextBox(TableRow tableRow, QuestionAnswer questionAnswer) {
 		final EditText answerText = new EditText(this.getActivity());
 		questionAnswer.clearWidgetIds();
 		answerText.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
 		answerText.setWidth(500);
-		int widgetId = getUniqueWidgetId();
+		int widgetId = MainActivity.getUniqueWidgetId(this.getActivity());
 		answerText.setId(widgetId);
 		questionAnswer.addWidgetId(widgetId);
 		Button speakButton = new Button(this.getActivity());

@@ -43,6 +43,9 @@ public class FormTemplateManager {
 		formTemplateMap.put(DEFAULT_FORM_NAME, defaultFormTemplate);
 			File templatesDir = new File(Environment.getExternalStorageDirectory(),
 					TemplateDownloadTask.TEMPLATES);
+			if ( ! templatesDir.exists()){
+				templatesDir.mkdir();
+			}
 			for ( File file:templatesDir.listFiles()){
 				if (file.getName().endsWith("xml")){
 					try

@@ -4,6 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="print_form">Print Form</string>
     <string name="clear_form">Clear Form</string>
+    <string name="clear_form_partial">Clear Form Partially</string>
     <string name="save_form">Save Form</string>
     <string name="exit_app">Exit App</string>
     <string name="form_chooser">Form Chooser</string>

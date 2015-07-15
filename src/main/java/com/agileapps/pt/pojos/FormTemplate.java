@@ -118,9 +118,14 @@ public class FormTemplate {
 				+ ", formTemplatePartList=" + formTemplatePartList + "]";
 	}
 
-	public void clear() {
+	public void clear(boolean all) {
+		int cntr=0;
 		for (FormTemplatePart formTemplatePart : formTemplatePartList) {
+			if ( all || cntr > 0)
+			{
 			formTemplatePart.clear();
+			}
+			cntr++;
 		}
 	}
 

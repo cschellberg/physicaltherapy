@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import org.simpleframework.xml.core.Persister;
 
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +20,8 @@ import android.speech.RecognizerIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
@@ -35,13 +38,10 @@ import com.agileapps.pt.pojos.FormTemplate;
 import com.agileapps.pt.pojos.FormTemplatePart;
 import com.agileapps.pt.pojos.InputType;
 import com.agileapps.pt.pojos.QuestionAnswer;
-import com.agileapps.pt.tasks.GoogleDriveSaver;
 import com.agileapps.pt.util.PDFWriter;
 import com.agileapps.pt.util.PhysicalTherapyUtils;
 
 public class MainActivity extends FragmentActivity {
-
-	static int idCounter = 90000;
 
 	public static final String ARG_SECTION_NUMBER = "section_number";
 	public static final String HOME_WIDGET = "homeWidget";
@@ -55,18 +55,15 @@ public class MainActivity extends FragmentActivity {
 	public static final int REQUEST_ACCOUNT_PICKER = 2;
 	public static final int REQUEST_AUTHORIZATION = 3;
 	public static final int RESULT_STORE_FILE = 4;
-
 	public static final String FORM_DIR = "pt_forms";
-
-	SectionsPagerAdapter mSectionsPagerAdapter;
+	static int idCounter = 90000;
+	public static final String FRAGMENT_PREFIX = "template_part_";
 
 	InputType answerWidgetDataType = null;
 	Integer answerWidgetId = null;
-
-	/**
-	 * The {@link ViewPager} that will host the section contents.
-	 */
 	ViewPager mViewPager;
+
+	private FragmentStatePagerAdapter sectionsPagerAdapter;
 
 	private FormTemplate getFormTemplate() {
 		FormTemplate formTemplate = null;
@@ -88,30 +85,51 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		try {
-			Log.i(PT_APP_INFO, "Creating main activity layouts ");
+			super.onCreate(savedInstanceState);
+			FragmentManager.enableDebugLogging(true);
 			setContentView(R.layout.activity_main);
-			FormTemplate formTemplate = getFormTemplate();
-			if (formTemplate == null) {
-				return;
-			}
-			FragmentManager fragmentManager = this.getSupportFragmentManager();
-			mSectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager);
-
-			// Set up the ViewPager with the sections adapter.
-			mViewPager = (ViewPager) findViewById(R.id.pager);
-			mViewPager.setAdapter(mSectionsPagerAdapter);
+			createFragments();
 		} catch (Exception ex) {
 			String errorStr = "Cannot initialize physical therapy because "
 					+ ex.getMessage();
-			Log.e(PT_APP_INFO, errorStr);
+			Log.e(PT_APP_INFO, errorStr,ex);
 			Toast toast = Toast.makeText(getApplicationContext(), errorStr,
 					Toast.LENGTH_LONG);
 			toast.show();
 		}
+	}
+
+	private void createFragments(){
+		FormTemplate formTemplate = getFormTemplate();
+		if (formTemplate == null) {
+			return;
+		}
+		FragmentManager fragmentManager = this.getSupportFragmentManager();
+		sectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager);
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(sectionsPagerAdapter);
+		for (int ii = 0; ii < formTemplate.getFormTemplatePartList().size(); ii++) {
+			getFragment(fragmentManager, ii);
+		}
+	}
+	
+	private Fragment getFragment(FragmentManager fragmentManager,int position) {
+		String tag = FRAGMENT_PREFIX +position;
+		Fragment fragment = fragmentManager.findFragmentByTag(tag);
+		if ( fragment != null){
+			return fragment;
+		}
+		FragmentTransaction fragmentTransaction = fragmentManager
+				.beginTransaction();
+		GenericFragment genericFragment = new GenericFragmentImpl();
+		fragmentTransaction.add(R.id.pager, genericFragment, tag);
+		fragmentTransaction.commit();
+		return genericFragment;
 	}
 
 	@Override
@@ -121,6 +139,8 @@ public class MainActivity extends FragmentActivity {
 		return true;
 	}
 
+	
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		FormTemplate formTemplate = getFormTemplate();
@@ -144,32 +164,40 @@ public class MainActivity extends FragmentActivity {
 				}
 				break;
 			case R.id.clear_template:
-				formTemplate.clear();
-				clearWidgets(formTemplate);
+				formTemplate.clear(true);
+				clearWidgets(formTemplate,true);
 				break;
+			case R.id.clear_template_partial:
+				formTemplate.clear(false);
+				clearWidgets(formTemplate,false);
+				break;	
 			case R.id.save_template:
 				saveForm(formTemplate);
 				break;
 			case R.id.retrieve_or_delete:
-				Intent retrieveFormIntent= new Intent(this,FormChooserActivity.class);
+				Intent retrieveFormIntent = new Intent(this,
+						FormChooserActivity.class);
 				startActivity(retrieveFormIntent);
 				finish();
 				break;
 			case R.id.download_templates:
-				Intent downloadTemplatesIntent= new Intent(this,TemplateDownloaderActivity.class);
-				startActivity( downloadTemplatesIntent);
+				Intent downloadTemplatesIntent = new Intent(this,
+						TemplateDownloaderActivity.class);
+				startActivity(downloadTemplatesIntent);
 				finish();
 				break;
 			case R.id.action_settings:
-				Intent settingsIntent= new Intent(this,ConfigurationActivity.class);
-				startActivity( settingsIntent);
+				Intent settingsIntent = new Intent(this,
+						ConfigurationActivity.class);
+				startActivity(settingsIntent);
 				finish();
-			break;
+				break;
 			case R.id.change_template:
-				Intent changeTemplatesIntent= new Intent(this,ChangeTemplateActivity.class);
-				startActivity( changeTemplatesIntent);
+				Intent changeTemplatesIntent = new Intent(this,
+						ChangeTemplateActivity.class);
+				startActivity(changeTemplatesIntent);
 				finish();
-			break;
+				break;
 
 			case R.id.exit_app:
 				finish();
@@ -197,13 +225,12 @@ public class MainActivity extends FragmentActivity {
 					Log.e(PT_APP_INFO, "Unable to create pt_forms directory");
 				}
 			}
-			if ( ! formFile.getParentFile().mkdirs())
-			{
-				Log.e(PT_APP_INFO,"Cannot create directories "+formFile.getParentFile().getAbsolutePath());
-				return;
+			if (!formFile.getParentFile().mkdirs()) {
+				Log.e(PT_APP_INFO, "Cannot create directories "
+						+ formFile.getParentFile().getAbsolutePath());
 			}
 			fos = new FileOutputStream(formFile);
-			Persister persister=new Persister();
+			Persister persister = new Persister();
 			persister.write(formTemplate, fos);
 		} catch (Exception ex) {
 			Log.e(PT_APP_INFO, "Unable to save form because  " + ex);
@@ -214,9 +241,14 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
-	private void clearWidgets(FormTemplate formTemplate) {
+	private void clearWidgets(FormTemplate formTemplate,boolean all) {
+		int cntr=0;
 		for (FormTemplatePart formTemplatePart : formTemplate
 				.getFormTemplatePartList()) {
+			if ( !all && cntr == 0){
+				cntr++;
+				continue;
+			}
 			for (QuestionAnswer questionAnswer : formTemplatePart
 					.getQuestionAnswerList()) {
 				Integer widgetIds[] = questionAnswer.getWidgetIds();
@@ -249,13 +281,23 @@ public class MainActivity extends FragmentActivity {
 		Log.i(PT_APP_INFO, "main activity  being restored");
 	}
 
+	
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+	}
+
+
+
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		Log.i(PT_APP_INFO, "main activity  being destroyed");
 	}
 
-	public class SectionsPagerAdapter extends FragmentPagerAdapter {
+	public class SectionsPagerAdapter extends FragmentStatePagerAdapter{
 
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
@@ -271,15 +313,14 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			Fragment fragment = null;
-			GenericFragmentImpl genericFragment = new GenericFragmentImpl();
-			genericFragment.setTemplate(position);
-			return genericFragment;
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			return MainActivity.this.getFragment(fragmentManager, position);
 		}
 
 		@Override
 		public int getCount() {
-			return getFormTemplate().getFormTemplatePartList().size();
+			FormTemplate formTemplate=getFormTemplate();
+			return formTemplate.getFormTemplatePartList().size();
 		}
 
 		@Override
@@ -301,8 +342,8 @@ public class MainActivity extends FragmentActivity {
 	public static class GenericFragmentImpl extends GenericFragment {
 		public GenericFragmentImpl() {
 			super();
-			layoutId = R.layout.generic_fragment;
-			tableLayoutId = R.id.tableZeroLayout;
+			// layoutId = R.layout.generic_fragment;
+			// tableLayoutId = R.id.tableZeroLayout;
 		}
 	}
 
@@ -345,6 +386,24 @@ public class MainActivity extends FragmentActivity {
 			break;
 		}
 
+	}
+
+	public static int getUniqueWidgetId(Context context) {
+		AppWidgetProviderInfo appWidgetInfo = null;
+		int counter = 0;
+		while (appWidgetInfo == null && counter < 10000) {
+			counter++;
+			appWidgetInfo = AppWidgetManager
+					.getInstance(context).getAppWidgetInfo(
+							MainActivity.idCounter);
+			if (appWidgetInfo == null) {
+				int retId = MainActivity.idCounter;
+				MainActivity.idCounter++;
+				return retId;
+			}
+		}
+		throw new RuntimeException(
+				"Cannot find uniqueId to assign to widget");
 	}
 
 }

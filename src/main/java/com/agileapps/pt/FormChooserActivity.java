@@ -61,7 +61,7 @@ public class FormChooserActivity extends Activity {
 			}
 		});
 		
-		Button cancelButton = (Button) this.findViewById(R.id.viewForm);
+		Button cancelButton = (Button) this.findViewById(R.id.cancelForm);
 		cancelButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View arg0) {
 				Intent mainIntent= new Intent(FormChooserActivity.this,MainActivity.class);
