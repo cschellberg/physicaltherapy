@@ -114,6 +114,27 @@ public class PhysicalTherapyUtils {
 		}
 	}
 
+	public static String replaceByLabel( String oldAnswer, String label,String newValue){
+		if (StringUtils.isBlank(oldAnswer)  && StringUtils.isNotBlank(newValue) &&  StringUtils.isNotBlank(label)){
+			return label+","+newValue+"|";
+		}else if (StringUtils.isBlank(newValue) || StringUtils.isBlank(label)){
+			return oldAnswer;
+		}
+		if ( StringUtils.isNotBlank(label) &&! oldAnswer.contains(label)){
+			return oldAnswer+label+","+newValue+"|";
+		}
+		String parts[]=oldAnswer.split("\\|");
+		StringBuilder sb=new StringBuilder();
+		for ( String part:parts){
+			if (part.contains(label)){
+				sb.append(label).append(",").append(newValue).append("|");
+			}else{
+				sb.append(part).append("|");
+			}
+		}
+		return sb.toString();
+	}
+	
 	private static int getIndex(Map<String, Integer> valueMap, String key) {
 		int retValue = 100;// totally arbitrary
 		if (valueMap.containsKey(key)) {

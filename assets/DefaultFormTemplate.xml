@@ -1014,7 +1014,7 @@
 			<questionAnswerList>
 				<questionAnswer>
 					<id>1</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>INTEGER</inputType>
 					<question>Stable base eyes open 20 sec</question>
 					<choiceList>
 						<choice>R</choice>

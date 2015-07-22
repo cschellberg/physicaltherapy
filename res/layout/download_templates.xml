@@ -5,13 +5,13 @@
     android:orientation="vertical" >
  
  <LinearLayout
-     android:id="@+id/templateSelectorLayout"
-    android:layout_width="match_parent"
+     android:layout_width="match_parent"
     android:layout_height="wrap_content" 
     android:layout_marginTop="15dip"
     android:gravity="center_horizontal"
     android:orientation="horizontal">
     <TextView
+    style="@style/label"
     android:id="@+id/downloadTemplateStatus"
     android:layout_width="300dip"
     android:layout_height="wrap_content"
@@ -20,15 +20,15 @@
     
     
 <LinearLayout
-     android:id="@+id/templateSelectorLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" 
     android:layout_marginTop="15dip"
     android:gravity="center_horizontal"
     android:orientation="horizontal">
     <TextView
+    style="@style/label"
     android:id="@+id/textView1"
-    android:layout_width="150dip"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/template_label"
     android:textAppearance="?android:attr/textAppearanceMedium" />   
@@ -48,12 +48,14 @@
     android:gravity="center_horizontal"
     android:orientation="horizontal">
 <Button
+        style="@style/button"
     android:id="@+id/downloadTemplate"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/download_template" />
 
 <Button
+    style="@style/button"
     android:id="@+id/cancelTemplate"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

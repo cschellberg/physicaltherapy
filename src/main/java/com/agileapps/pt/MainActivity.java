@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -91,7 +92,6 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		try {
 			super.onCreate(savedInstanceState);
-			FragmentManager.enableDebugLogging(true);
 			setContentView(R.layout.activity_main);
 			createFragments();
 		} catch (Exception ex) {
@@ -255,12 +255,24 @@ public class MainActivity extends FragmentActivity {
 				for (Integer widgetId : widgetIds) {
 					View view = this.findViewById(widgetId);
 					if (view != null) {
-						if (view instanceof EditText) {
+						if (questionAnswer.getInputType() != InputType.CHECKBOX && 
+								questionAnswer.getInputType()!= InputType.RADIO ) {
+							if (! questionAnswer.hasChoiceList())
+							{
 							((EditText) view).setText("");
-						} else if (view instanceof CheckBox) {
+							}else{
+								ViewGroup viewGroup=(ViewGroup)view;
+								for ( int ii=0; ii < viewGroup.getChildCount();ii++){
+									View subView=viewGroup.getChildAt(ii);
+									if ( subView instanceof EditText){
+										((EditText)subView).setText("");
+									}
+								}
+							}
+						} else if (questionAnswer.getInputType() == InputType.CHECKBOX) {
 							CheckBox checkBox = (CheckBox) view;
 							checkBox.setChecked(false);
-						} else if (view instanceof RadioGroup) {
+						} else if (questionAnswer.getInputType() == InputType.RADIO) {
 							RadioGroup radioGroup = (RadioGroup) view;
 							for (int ii = 0; ii < radioGroup.getChildCount(); ii++) {
 								RadioButton radioButton = (RadioButton) radioGroup
@@ -281,7 +293,9 @@ public class MainActivity extends FragmentActivity {
 		Log.i(PT_APP_INFO, "main activity  being restored");
 	}
 
-	
+	@Override
+	public void onBackPressed() {
+	}
 	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {

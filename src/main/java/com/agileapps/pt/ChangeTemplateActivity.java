@@ -34,7 +34,7 @@ public class ChangeTemplateActivity extends Activity {
 			String[]  items = new String[templateList.size()];
 			templateList.toArray(items);
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-					android.R.layout.simple_spinner_item, items);
+					R.layout.spinner_item, items);
 			templateSelector.setAdapter(adapter);
 			templateSelector.setSelection(PhysicalTherapyUtils.getSelectedIndex(config.getDefaultFormTemplate(), items));
 		} catch (Exception ex) {
@@ -67,6 +67,12 @@ public class ChangeTemplateActivity extends Activity {
 
 	}
 	
+	@Override
+	public void onBackPressed() {
+		Intent mainIntent= new Intent(ChangeTemplateActivity.this,MainActivity.class);
+		startActivity(mainIntent);
+		finish();
+	}
 	
 	
 }

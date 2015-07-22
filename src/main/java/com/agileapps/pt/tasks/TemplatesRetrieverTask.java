@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import com.agileapps.pt.MainActivity;
+import com.agileapps.pt.R;
 import com.agileapps.pt.TemplateDownloaderActivity;
 import com.agileapps.pt.manager.ConfigManager;
 import com.agileapps.pt.pojos.Config;
@@ -49,13 +50,17 @@ public class TemplatesRetrieverTask extends
 	@Override
 	protected void onPostExecute(StatusAndResponse statusAndResponse) {
 		Gson gson = new Gson();
+		if ( statusAndResponse == null ){
+			statusView.setText("No status returned");
+			return;
+		}
 		if ( (statusAndResponse.statusCode/100) == 2)
 		{
 		TemplateResponse templateResponse = gson.fromJson(
 				statusAndResponse.message, TemplateResponse.class);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 				templateSelector.getContext(),
-				android.R.layout.simple_spinner_item,
+				R.layout.spinner_item,
 				templateResponse.getTemplates());
 		templateSelector.setAdapter(adapter);
 		}else if ( statusAndResponse.statusCode == -1){

@@ -8,10 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dip"
-        android:gravity="left"
+       android:gravity="center_horizontal"
         android:orientation="horizontal" >
 
         <TextView
+           style="@style/label"
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,6 +20,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
+            style="@style/edit"
             android:id="@+id/company"
             android:layout_width="300dip"
             android:layout_height="wrap_content" />
@@ -28,10 +30,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dip"
-        android:gravity="left"
+        android:gravity="center_horizontal"
         android:orientation="horizontal" >
 
         <TextView
+            style="@style/label"
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,10 +52,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dip"
-        android:gravity="left"
+       android:gravity="center_horizontal"
         android:orientation="horizontal" >
 
         <TextView
+            style="@style/label"
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,10 +74,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dip"
-        android:gravity="left"
+       android:gravity="center_horizontal"
         android:orientation="horizontal" >
 
         <TextView
+            style="@style/label"
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,6 +86,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
+            style="@style/edit"
             android:id="@+id/templateUrl"
             android:layout_width="300dip"
             android:layout_height="wrap_content" />
@@ -95,12 +101,14 @@
         android:orientation="horizontal" >
 
         <Button
+            style="@style/button"
             android:id="@+id/saveConfig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/save_config" />
 
         <Button
+            style="@style/button"
             android:id="@+id/cancelConfig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

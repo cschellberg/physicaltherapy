@@ -69,6 +69,12 @@ public class TemplateDownloaderActivity extends Activity {
 
 	}
 
-	
+	@Override
+	public void onBackPressed() {
+		Intent mainIntent= new Intent(TemplateDownloaderActivity.this,MainActivity.class);
+		startActivity(mainIntent);
+		finish();
+	}
+
 
 }

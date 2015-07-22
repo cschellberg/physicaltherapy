@@ -47,7 +47,7 @@ public class ConfigurationActivity extends Activity {
 	
 			clientTemplateList.toArray(items);
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-					android.R.layout.simple_spinner_item, items);
+					R.layout.spinner_item, items);
 			clientTemplateSelector.setAdapter(adapter);
 			clientTemplateSelector.setSelection(PhysicalTherapyUtils.getSelectedIndex(config.getDefaultClientInfoTemplate(), items));
 
@@ -57,7 +57,7 @@ public class ConfigurationActivity extends Activity {
 			items = new String[templateList.size()];
 			templateList.toArray(items);
 			adapter = new ArrayAdapter<String>(this,
-					android.R.layout.simple_spinner_item, items);
+					R.layout.spinner_item, items);
 			templateSelector.setAdapter(adapter);
 			templateSelector.setSelection(PhysicalTherapyUtils.getSelectedIndex(config.getDefaultFormTemplate(), items));
 
@@ -93,6 +93,12 @@ public class ConfigurationActivity extends Activity {
 
 	}
 	
+	@Override
+	public void onBackPressed() {
+		Intent mainIntent= new Intent(ConfigurationActivity.this,MainActivity.class);
+		startActivity(mainIntent);
+		finish();
+	}
 	
 	protected void saveConfig() {
 		try {

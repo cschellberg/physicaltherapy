@@ -69,7 +69,7 @@ public class FormChooserActivity extends Activity {
 				finish();
 			}
 		});
-		
+				
 		Button viewButton = (Button) this.findViewById(R.id.viewForm);
 		viewButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -106,7 +106,12 @@ public class FormChooserActivity extends Activity {
 		});
 	}
 
-
+	@Override
+	public void onBackPressed() {
+		Intent mainIntent= new Intent(FormChooserActivity.this,MainActivity.class);
+		startActivity(mainIntent);
+		finish();
+	}
 
 	@Override
 	protected void onResume() {
@@ -129,7 +134,8 @@ public class FormChooserActivity extends Activity {
 		String[] items = new String[clientList.size()];
 		clientList.toArray(items);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, items);
+				R.layout.spinner_item, items);
+
 		clientSelector.setAdapter(adapter);
 		clientSelector.setOnItemSelectedListener(new OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view,
@@ -151,7 +157,7 @@ public class FormChooserActivity extends Activity {
 				formList.toArray(items);
 				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 						FormChooserActivity.this,
-						android.R.layout.simple_spinner_item, items);
+						R.layout.spinner_item, items);
 				formSelector.setAdapter(adapter);
 			}
 
@@ -180,7 +186,7 @@ public class FormChooserActivity extends Activity {
 				dateList.toArray(items);
 				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 						FormChooserActivity.this,
-						android.R.layout.simple_spinner_item, items);
+						R.layout.spinner_item, items);
 				dateSelector.setAdapter(adapter);
 
 			}
@@ -213,7 +219,7 @@ public class FormChooserActivity extends Activity {
 				fileList.toArray(items);
 				ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 						FormChooserActivity.this,
-						android.R.layout.simple_spinner_item, items);
+						R.layout.spinner_item, items);
 				fileSelector.setAdapter(adapter);
 			}
 

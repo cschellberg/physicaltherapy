@@ -97,5 +97,8 @@ public class QuestionAnswer {
 	public void clearWidgetIds() {
 		widgetIdSet.clear();		
 	}
+	public boolean hasChoiceList() {
+		return ( choiceList != null && choiceList.size() > 0);
+	}
    
 }
