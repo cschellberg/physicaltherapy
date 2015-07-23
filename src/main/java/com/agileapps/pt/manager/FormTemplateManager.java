@@ -52,6 +52,7 @@ public class FormTemplateManager {
 					{
 					FormTemplate formTemplate = PhysicalTherapyUtils
 							.parseFormTemplate(new FileInputStream(file));
+					formTemplate.setFileName(file.getName());
 					formTemplateMap.put(formTemplate.getFormName(), formTemplate);
 					}catch(Exception ex){
 						Log.e(MainActivity.PT_APP_INFO,"Unable to load template "+file.getName()+" because "+ex);
@@ -135,5 +136,19 @@ public class FormTemplateManager {
 		temporaryFormTemplateOverride=formTemplate.getFormName();
 		currentFormTemplate=formTemplate;
 
+	}
+
+	public static void deleteTemplate(String formName)
+	{
+		FormTemplate formTemplate=formTemplateMap.get(formName);
+		if ( formTemplate == null  || formTemplate.getFileName() == null){
+			return;
+		}
+		File templatesDir = new File(Environment.getExternalStorageDirectory(),
+				TemplateDownloadTask.TEMPLATES);
+		File templateFile=new File(templatesDir,formTemplate.getFileName());
+		if ( templateFile.delete()){
+			formTemplateMap.remove(formName);
+		}
 	}
 }

@@ -19,13 +19,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
 import com.agileapps.pt.manager.FormTemplateManager;
@@ -71,11 +71,10 @@ public abstract class GenericFragment extends Fragment {
 											+ widgetIds[0]);
 							continue;
 						}
-						if (! questionAnswer.hasChoiceList())
-						{
-						((EditText) view).setText(answer);
-						}else{
-							setTextViews((ViewGroup)view,answer);
+						if (!questionAnswer.hasChoiceList()) {
+							((EditText) view).setText(answer);
+						} else {
+							setTextViews((ViewGroup) view, answer);
 						}
 					} else if (questionAnswer.getInputType() == InputType.RADIO) {
 						View view = this.getActivity().findViewById(
@@ -124,28 +123,29 @@ public abstract class GenericFragment extends Fragment {
 	}
 
 	private void setTextViews(ViewGroup viewGroup, String answer) {
-		String parts[]=answer.split("\\|");
-		Map<String,String>valueMap=new HashMap<String,String>();
-		for ( String part:parts){
-			String subParts[]=part.split("\\,");
-			if ( subParts.length > 1){
+		String parts[] = answer.split("\\|");
+		Map<String, String> valueMap = new HashMap<String, String>();
+		for (String part : parts) {
+			String subParts[] = part.split("\\,");
+			if (subParts.length > 1) {
 				valueMap.put(subParts[0], subParts[1]);
 			}
 		}
-		for ( int ii=0 ;ii<viewGroup.getChildCount();ii++){
-			View view=viewGroup.getChildAt(ii);
-			if (view instanceof TextView && (ii+1) < viewGroup.getChildCount()  ){
-				String value=valueMap.get(((TextView)view).getText());
-				if (value != null  ){
-					View editView=viewGroup.getChildAt(ii+1);
-					if ( editView instanceof EditText){
-						((EditText)editView).setText(value);
+		for (int ii = 0; ii < viewGroup.getChildCount(); ii++) {
+			View view = viewGroup.getChildAt(ii);
+			if (view instanceof TextView
+					&& (ii + 1) < viewGroup.getChildCount()) {
+				String value = valueMap.get(((TextView) view).getText());
+				if (value != null) {
+					View editView = viewGroup.getChildAt(ii + 1);
+					if (editView instanceof EditText) {
+						((EditText) editView).setText(value);
 					}
 				}
 			}
-			
+
 		}
-		
+
 	}
 
 	@Override
@@ -179,13 +179,16 @@ public abstract class GenericFragment extends Fragment {
 				questionView.setTextSize(25f);
 				tableRow.addView(questionView);
 				((TableRow.LayoutParams) questionView.getLayoutParams()).leftMargin = 30;
+				((TableRow.LayoutParams) questionView.getLayoutParams()).width = 0;
+				((TableRow.LayoutParams) questionView.getLayoutParams()).weight = 0.5f;
 				if (questionAnswer.getInputType() != InputType.CHECKBOX
 						&& questionAnswer.getInputType() != InputType.RADIO) {
+					ViewGroup viewGroup = new LinearLayout(this.getActivity());
 					if (!questionAnswer.hasChoiceList()) {
-						addTextBox(null, "", tableRow, questionAnswer, true);
+						addTextBox(viewGroup, "", tableRow, questionAnswer,
+								true);
+						tableRow.addView(viewGroup);
 					} else {
-						ViewGroup viewGroup = new LinearLayout(
-								this.getActivity());
 						int widgetId = MainActivity.getUniqueWidgetId(this
 								.getActivity());
 						viewGroup.setId(widgetId);
@@ -230,7 +233,6 @@ public abstract class GenericFragment extends Fragment {
 					CheckBox checkBox = (CheckBox) compoundButton;
 					String text = (new StringBuilder()).append(
 							checkBox.getText()).toString();
-					FormTemplate formTemplate = getFormTemplate();
 					if (checkBox.isChecked()) {
 						String answer = PhysicalTherapyUtils.answerReplacer(
 								questionAnswer.getChoiceList(),
@@ -279,13 +281,11 @@ public abstract class GenericFragment extends Fragment {
 			radioButton.setText(value);
 			radioGroup.addView(radioButton);
 			((RadioGroup.LayoutParams) radioButton.getLayoutParams()).leftMargin = LEFT_MARGIN;
-			((RadioGroup.LayoutParams) radioButton.getLayoutParams()).bottomMargin = BOTTOM_MARGIN;
 		}
 		radioGroup
 				.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 					public void onCheckedChanged(RadioGroup radioGoup,
 							int radioId) {
-						FormTemplate formTemplate = getFormTemplate();
 						RadioButton radioButton = (RadioButton) radioGroup
 								.findViewById(radioId);
 						if (radioButton.isChecked()) {
@@ -301,6 +301,10 @@ public abstract class GenericFragment extends Fragment {
 		radioGroup.setId(widgetId);
 		questionAnswer.addWidgetId(widgetId);
 		tableRow.addView(radioGroup);
+		((TableRow.LayoutParams) radioGroup.getLayoutParams()).width = 0;
+		((TableRow.LayoutParams) radioGroup.getLayoutParams()).weight = 0.5f;
+		((TableRow.LayoutParams) radioGroup.getLayoutParams()).gravity = Gravity.LEFT;
+		((TableRow.LayoutParams) radioGroup.getLayoutParams()).bottomMargin = BOTTOM_MARGIN;
 	}
 
 	private void addTextBox(ViewGroup viewGroup, final String prefix,
@@ -309,64 +313,71 @@ public abstract class GenericFragment extends Fragment {
 		final EditText answerText = new EditText(this.getActivity());
 		questionAnswer.clearWidgetIds();
 		answerText.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
-		answerText.setWidth(500);
 		int widgetId = MainActivity.getUniqueWidgetId(this.getActivity());
 		answerText.setId(widgetId);
-		Button speakButton = new Button(this.getActivity());
-		speakButton.setText("Speak");
+		ImageButton speakButton = new ImageButton(this.getActivity());
+		speakButton.setImageResource(R.drawable.mike);
 		speakButton.setOnClickListener(new SpeechButtonClickListener(
-				(MainActivity) this.getActivity(), questionAnswer
-						.getInputType()));
+				(MainActivity) this.getActivity(), questionAnswer, answerText
+						.getId()));
 		if (questionAnswer.getInputType() == InputType.INTEGER) {
 			answerText.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
-			answerText.setWidth(120);
 		} else if (questionAnswer.getInputType() == InputType.EMAIL) {
 			answerText
 					.setInputType(android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 		} else if (questionAnswer.getInputType() == InputType.PHONE) {
 			answerText.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
 		}
-		answerText.addTextChangedListener(new TextWatcher() {
-			public void afterTextChanged(Editable editable) {
-				FormTemplate formTemplate = getFormTemplate();
-				String answer = editable.toString();
-				if (questionAnswer.hasChoiceList()) {
-					answer = PhysicalTherapyUtils.replaceByLabel(
-							questionAnswer.getAnswer(), prefix, answer);
-				}
-				questionAnswer.setAnswer(answer);
-			}
-
-			public void beforeTextChanged(CharSequence editable, int start,
-					int count, int after) {
-				// TODO Auto-generated method stub
-
-			}
-
-			public void onTextChanged(CharSequence editable, int start,
-					int count, int after) {
-				// TODO Auto-generated method stub
-			}
-		});
-		if (viewGroup != null) {
-			TextView label = new TextView(this.getActivity());
-			label.setText(prefix.trim());
-			viewGroup.addView(label);
-			viewGroup.addView(answerText);
-			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT,
-					LinearLayout.LayoutParams.WRAP_CONTENT);
-			lp.setMargins(0, 0, 50, 0);
-			answerText.setLayoutParams(lp);
+		answerText.addTextChangedListener(new TextBoxListener(questionAnswer,
+				prefix));
+		TextView label = new TextView(this.getActivity());
+		label.setText(prefix.trim());
+		viewGroup.addView(label);
+		viewGroup.addView(answerText);
+		if (questionAnswer.hasChoiceList()) {
 			questionAnswer.addWidgetId(viewGroup.getId());
 		} else {
-			tableRow.addView(answerText);
 			questionAnswer.addWidgetId(answerText.getId());
 		}
-		if (speakButtonShow) {
-			tableRow.addView(speakButton);
-		}
-
+		viewGroup.addView(speakButton);
+		setEditTextWidth(questionAnswer, answerText);
 	}
 
+	private void setEditTextWidth(QuestionAnswer questionAnswer,
+			EditText editText) {
+		int width = 500;
+		if (questionAnswer.getAnswerWidth() > 0) {
+			width = questionAnswer.getAnswerWidth();
+		} else if (questionAnswer.getInputType() == InputType.INTEGER) {
+			width = 120;
+		}
+		editText.setWidth(width);
+	}
+
+	private class TextBoxListener implements TextWatcher {
+		private final QuestionAnswer questionAnswer;
+		private final String prefix;
+
+		private TextBoxListener(QuestionAnswer questionAnswer, String prefix) {
+			this.questionAnswer = questionAnswer;
+			this.prefix = prefix;
+		}
+
+		public void afterTextChanged(Editable editable) {
+			String answer = editable.toString();
+			if (questionAnswer.hasChoiceList()) {
+				answer = PhysicalTherapyUtils.replaceByLabel(
+						questionAnswer.getAnswer(), prefix, answer);
+			}
+			questionAnswer.setAnswer(answer);
+		}
+
+		public void beforeTextChanged(CharSequence editable, int start,
+				int count, int after) {
+		}
+
+		public void onTextChanged(CharSequence editable, int start, int count,
+				int after) {
+		}
+	}
 }

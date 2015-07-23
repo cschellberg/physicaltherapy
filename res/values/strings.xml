@@ -28,4 +28,5 @@
      <string name="download_template">Download Template</string>
      <string name="template_label">Template</string>
      <string name="change_template">Change Template</string>
+      <string name="delete_template">Delete Template</string>
 </resources>

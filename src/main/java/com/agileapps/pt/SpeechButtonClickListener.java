@@ -3,6 +3,7 @@ package com.agileapps.pt;
 import java.util.Locale;
 
 import com.agileapps.pt.pojos.InputType;
+import com.agileapps.pt.pojos.QuestionAnswer;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -19,12 +20,14 @@ public class SpeechButtonClickListener implements OnClickListener {
 
 	public static final String WIDGET_ID_KEY="widgetIdKey";
 	public static final String INPUT_TYPE_KEY="inputTypeKey";
-	private InputType inputType = InputType.TEXT;
+	private final QuestionAnswer questionAnswer;
+	private final int answerWidgetId;
 	private MainActivity activity;
 
 	public SpeechButtonClickListener(MainActivity activity,
-			InputType inputType) {
-		this.inputType = inputType;
+			QuestionAnswer questionAnswer,int answerWidgetId) {
+		this.questionAnswer = questionAnswer;
+		this.answerWidgetId=answerWidgetId;
 		this.activity = activity;
 	}
 
@@ -35,9 +38,6 @@ public class SpeechButtonClickListener implements OnClickListener {
 
 	private void promptSpeechInput(View view) {
 		try {
-		ViewGroup viewGroup = (ViewGroup) view.getParent();
-		EditText editText = (EditText) viewGroup.getChildAt(1);
-		Integer  answerWidgetId = editText.getId();
 		Intent intent = new Intent(
 				RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 		intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -46,7 +46,7 @@ public class SpeechButtonClickListener implements OnClickListener {
 				Locale.getDefault());
 		intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak");
 		this.activity.answerWidgetId=answerWidgetId;
-		this.activity.answerWidgetDataType=inputType;
+		this.activity.answerWidgetDataType=questionAnswer.getInputType();
 			activity.startActivityForResult(intent,
 					MainActivity.REQ_CODE_SPEECH_INPUT);
 		} catch (ActivityNotFoundException a) {

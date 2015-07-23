@@ -28,15 +28,16 @@ public class ChangeTemplateActivity extends Activity {
 		setContentView(R.layout.change_template);
 		final Spinner templateSelector = (Spinner) findViewById(R.id.templateSelector);
 		try {
-            Config config=ConfigManager.getConfig();
+			Config config = ConfigManager.getConfig();
 			List<String> templateList = FormTemplateManager
 					.getFormTemplateNames();
-			String[]  items = new String[templateList.size()];
+			String[] items = new String[templateList.size()];
 			templateList.toArray(items);
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 					R.layout.spinner_item, items);
 			templateSelector.setAdapter(adapter);
-			templateSelector.setSelection(PhysicalTherapyUtils.getSelectedIndex(config.getDefaultFormTemplate(), items));
+			templateSelector.setSelection(PhysicalTherapyUtils
+					.getSelectedIndex(config.getDefaultFormTemplate(), items));
 		} catch (Exception ex) {
 			String errorStr = "Cannot get template names because " + ex;
 			Log.e(MainActivity.PT_APP_INFO, errorStr);
@@ -44,20 +45,12 @@ public class ChangeTemplateActivity extends Activity {
 			return;
 		}
 
-		Button changeTemplateButton = (Button) this.findViewById(R.id.changeTemplateButton);
-			changeTemplateButton.setOnClickListener(new View.OnClickListener() {
+		Button changeTemplateButton = (Button) this
+				.findViewById(R.id.changeTemplateButton);
+		changeTemplateButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				FormTemplateManager.temporaryFormTemplateOverride=(String)templateSelector.getSelectedItem();
-				Intent intent = new Intent(ChangeTemplateActivity.this,
-						MainActivity.class);
-				startActivity(intent);
-				finish();
-			}
-		});
-		Button cancelChangeTemplateButton = (Button) this
-				.findViewById(R.id.cancelChangeTemplateButton);
-		cancelChangeTemplateButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+				FormTemplateManager.temporaryFormTemplateOverride = (String) templateSelector
+						.getSelectedItem();
 				Intent intent = new Intent(ChangeTemplateActivity.this,
 						MainActivity.class);
 				startActivity(intent);
@@ -65,14 +58,39 @@ public class ChangeTemplateActivity extends Activity {
 			}
 		});
 
+		Button deleteTemplateButton = (Button) this
+				.findViewById(R.id.deleteTemplateButton);
+		deleteTemplateButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				 FormTemplateManager.deleteTemplate( (String) templateSelector
+						.getSelectedItem());
+				Intent intent = new Intent(ChangeTemplateActivity.this,
+						MainActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		});
+
+		Button cancelChangeTemplateButton = (Button) this
+				.findViewById(R.id.cancelChangeTemplateButton);
+		cancelChangeTemplateButton
+				.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View view) {
+						Intent intent = new Intent(ChangeTemplateActivity.this,
+								MainActivity.class);
+						startActivity(intent);
+						finish();
+					}
+				});
+
 	}
-	
+
 	@Override
 	public void onBackPressed() {
-		Intent mainIntent= new Intent(ChangeTemplateActivity.this,MainActivity.class);
+		Intent mainIntent = new Intent(ChangeTemplateActivity.this,
+				MainActivity.class);
 		startActivity(mainIntent);
 		finish();
 	}
-	
-	
+
 }

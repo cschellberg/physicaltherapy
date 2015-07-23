@@ -48,6 +48,8 @@ public class FormTemplate {
 
 	@ElementList
 	private List<FormTemplatePart> formTemplatePartList;
+	
+	private String fileName;
 
 	public FormTemplate()
 	{
@@ -178,7 +180,13 @@ public class FormTemplate {
 		return sb.toString();
 	}
 	
+	public String getFileName() {
+		return fileName;
+	}
 
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
 	public String getKey() {
 		/*
