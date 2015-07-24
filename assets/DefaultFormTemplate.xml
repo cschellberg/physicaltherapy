@@ -10,280 +10,280 @@
 			<questionAnswerList>
 				<questionAnswer>
 					<id>1</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Pes Planus</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 				</questionAnswer>
 				<questionAnswer>
 					<id>2</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Toes in</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>3</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Toes out</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>4</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Bunion</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>5</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Tibial malleous medial</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>6</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Tibial malleous lateral</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>7</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Bowed tibia</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>8</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Patella medial</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>9</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Patella lateral</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>10</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Patella alta</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>11</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Genu valgus</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>12</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Genu varus</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>13</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Smaller VMO</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>14</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Femoral angle medial</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>15</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Femoral angle lateral</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>16</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>ASIS low</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>17</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Iliac crest low</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>18</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Umbilicus lateral</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>19</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Nipple low</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>20</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Chest smaller</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>21</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Acromion lower</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>22</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Clavicle angle low</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>23</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Swelling AC joint</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>24</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Swelling SC joint</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>25</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Head tilt</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>26</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Cervical rotation restricted</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>27</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Eye low</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>28</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Nose deviation</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
@@ -295,241 +295,241 @@
 			<questionAnswerList>
 				<questionAnswer>
 					<id>1</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Ankle varus</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>2</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Ankle valgus</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>3</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Achilles medial</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>4</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Achilles lateral</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>5</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Smaller calf muscles</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>6</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Popliteal crease lower</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>7</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Genu valgus</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>8</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Genu varus</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>9</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Gluteal crease/fold lower</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>10</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>PSIS low</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>11</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Iliac crest low</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>12</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Abdoinal waist line indented</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>13</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Scoliosis convexity</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>14</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Low acromion</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>15</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Scapula depressed</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>16</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Scapula elevated</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>17</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Scapula inferior angle lift off</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>18</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Scapula medial border lift off</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>19</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Scapula internally rotated</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>20</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Scapula externally rotated</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>21</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Scapula downward rotated</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>22</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Scapula upward rotated</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>23</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Cervical spine rotated</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>24</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Head tilted</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
@@ -542,171 +542,171 @@
 			<questionAnswerList>
 				<questionAnswer>
 					<id>1</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>LOG front of lateral malleous</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>2</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Ankle dorsi flexion</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>3</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Ankle plantar flexion</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>4</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Flexed knee</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>5</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Hyper extended knee</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>6</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Hip trochanter anterior</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>7</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Hip trochanter posterior</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>8</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Lumbar vertebrae anterior lordosis</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>9</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Lumbar vertebrae posterior</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>10</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Abdominal ptosis</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>11</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>kyphosis</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>12</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Torso rotation right</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>13</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Torso rotation left</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>14</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Acromion anterior</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>15</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Acromion posterior</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>16</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Cervical lordosis</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>17</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Forward head</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
@@ -718,171 +718,171 @@
 			<questionAnswerList>
 				<questionAnswer>
 					<id>1</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>LOG front of lateral malleous</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>2</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Ankle dorsi flexion</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>3</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Ankle plantar flexion</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>4</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Flexed knee</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>5</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Hyper extended knee</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>6</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Hip trochanter anterior</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>7</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Hip trochanter posterior</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>8</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Lumbar vertebrae anterior lordosis</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>9</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Lumbar vertebrae posterior</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>10</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Abdominal ptosis</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>11</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Kyphosis</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>12</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Torso rotation right</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>13</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Torso rotation left</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>14</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Acromion anterior</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>15</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Acromion posterior</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>16</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Cervical lordosis</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
 				<questionAnswer>
 					<id>17</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>RADIO</inputType>
 					<question>Forward head</question>
 					<choiceList>
-						<choice>R</choice>
-						<choice>L</choice>
+						<choice>Y</choice>
+						<choice>N</choice>
 					</choiceList>
 
 				</questionAnswer>
@@ -1958,11 +1958,11 @@
 
 		<formTemplatePart>
 			<id>10</id>
-			<title>Thrower Upper Extremity PROM and AROM</title>
+			<title>Thrower Upper Extremity PROM and INTEGER</title>
 			<questionAnswerList>
 				<questionAnswer>
 					<id>1</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>INTEGER</inputType>
 					<question>AC Joint AP Glide</question>
 					<choiceList>
 						<choice>R</choice>
@@ -1971,7 +1971,7 @@
 				</questionAnswer>
 				<questionAnswer>
 					<id>2</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>INTEGER</inputType>
 					<question>AC Joint Inferior Glide</question>
 					<choiceList>
 						<choice>R</choice>
@@ -1980,7 +1980,7 @@
 				</questionAnswer>
 				<questionAnswer>
 					<id>3</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>INTEGER</inputType>
 					<question>SC Joint AP Glide</question>
 					<choiceList>
 						<choice>R</choice>
@@ -1989,7 +1989,7 @@
 				</questionAnswer>
 				<questionAnswer>
 					<id>4</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>INTEGER</inputType>
 					<question>SC Joint Inferior Glide</question>
 					<choiceList>
 						<choice>R</choice>
@@ -1998,7 +1998,7 @@
 				</questionAnswer>
 				<questionAnswer>
 					<id>5</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>INTEGER</inputType>
 					<question>GH Posterior Glide</question>
 					<choiceList>
 						<choice>R</choice>
@@ -2007,7 +2007,7 @@
 				</questionAnswer>
 				<questionAnswer>
 					<id>6</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>INTEGER</inputType>
 					<question>GH Inferior Glide</question>
 					<choiceList>
 						<choice>R</choice>
@@ -2016,7 +2016,7 @@
 				</questionAnswer>
 				<questionAnswer>
 					<id>7</id>
-					<inputType>CHECKBOX</inputType>
+					<inputType>INTEGER</inputType>
 					<question>GH Anterior Glide</question>
 					<choiceList>
 						<choice>R</choice>
